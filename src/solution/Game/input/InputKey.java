@@ -1,54 +1,60 @@
 package solution.Game.input;
 
+import solution.Game.Util.Timer;
+
 public class InputKey {
 
     private static long reactionTimeinMillis = 100;
 
-    private boolean pressed;
+    private boolean pressed = false;
 
-    private boolean previouslyPressed;
+    private boolean previouslyPressed = false;
 
-    private static long beforeTime;
-
-    private static long currentTime;
+    Timer pressTimer;
+    Timer releaseTimer;
 
 
     public InputKey() {
-        beforeTime = System.currentTimeMillis();
+        pressTimer = new Timer();
+        releaseTimer = new Timer();
     }
 
     public void press() {
-        currentTime = System.currentTimeMillis();
-
-        //perbedaan waktu antara current dan before
-        long deltaTime = currentTime - beforeTime;
-
+        pressTimer.start();
+        releaseTimer.stop();
+        if(pressTimer.getTime()<0)
+            return;
+       
         // baru aja di pencet
-        if (deltaTime > reactionTimeinMillis){
-            this.pressed = true;
+        //TODO ada yang salah disini
+        
+        if (pressTimer.getTime() < reactionTimeinMillis){
+            pressed = true;
             previouslyPressed = false;
         }
-        if (deltaTime <= reactionTimeinMillis){
-            this.pressed = true;
-            this.previouslyPressed = true;
+        if (pressTimer.getTime() > reactionTimeinMillis){
+            pressed = true;
+            previouslyPressed = true;
         }
 
-        beforeTime = currentTime;
+        
     }
 
     public void release() {
-        currentTime = System.currentTimeMillis();
+        releaseTimer.start();
+        pressTimer.stop();
 
-        //perbedaan waktu antara current dan before
-        long deltaTime = currentTime - beforeTime;
+        if(releaseTimer.getTime() < 0)
+            return;
 
-        if (deltaTime > reactionTimeinMillis){
-            this.pressed = false;
-            previouslyPressed = false;
+        if (releaseTimer.getTime() < reactionTimeinMillis){
+            
+            pressed = false;
+            previouslyPressed = true;
         }
-        if (deltaTime <= reactionTimeinMillis){
-            this.pressed = false;
-            this.previouslyPressed = true;
+        if (releaseTimer.getTime() > reactionTimeinMillis){
+            pressed = false;
+            previouslyPressed = false;
         }
     }
 
@@ -57,9 +63,8 @@ public class InputKey {
      * @return the pressed
      */
     public boolean isPressed() {
-        return pressed &&  !previouslyPressed;
+        return pressed && !previouslyPressed;
     }
-
     /**
      * @return the released
      */

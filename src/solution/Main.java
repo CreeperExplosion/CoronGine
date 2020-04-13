@@ -1,23 +1,21 @@
 package solution;
 
-import solution.graphics.Window;
-import solution.graphics.WindowPanel;
-import java.util.Vector;
 
-import solution.Game.CoronaGame;
+
+import solution.Game.game.CoronaGame;
+import solution.Game.game.GameLoop;
+import solution.Game.game.logic.GameLogic;
 
 public class Main {
 
     public static void main(String[] args) {
-	// write your code here
-        Window window = new Window(new WindowPanel()).setWindowParams(1280, 720).commit();
+        
 
-        CoronaGame game = new CoronaGame();
-    
-    
+        GameLogic corona = new CoronaGame();
+        GameLoop game = new GameLoop(corona);
         System.out.println();
         game.start();
     }   
 
-    }
+}
 

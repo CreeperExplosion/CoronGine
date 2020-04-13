@@ -2,71 +2,109 @@ package solution.graphics;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
-import java.util.HashMap;
 
-public class Window extends JFrame {
+public class Window {
 
     private JPanel panel;
+    private int width;
+    private int height;
+
     private Canvas canvas;
-    private int windowWidth = 720;
-    private int windowHeight = 480;
 
+    String title;
 
-    public Window(JPanel panel){
-        this.panel = panel;
+    JFrame gameFrame;
+
+    public Window(int width, int height, String title) {
+        this.width = width;
+        this.height = height;
+        this.title = title;
+        
+        gameFrame = new JFrame(title);
+        panel = new JPanel();
+        canvas = new Canvas();
     }
 
-    //SHOWS THE WINDOW FRAME
-    public Window commit(){
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        panel.setPreferredSize(new Dimension(windowWidth,windowHeight));
-        setSize(windowWidth,windowHeight);
-        setContentPane(panel);
-        setVisible(true);
-        //frame.setLocationRelativeTo(null);
-        //frame.pack();
-        return this;
+    public Window(String title) {
+        this(720, 480, title);
     }
+
+    public void init() {
+        gameFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        gameFrame.setSize(width, height);
+        gameFrame.setPreferredSize(new Dimension(width,height));
+        gameFrame.setContentPane(panel);
+        gameFrame.setLocationRelativeTo(null);
+        gameFrame.setTitle(title);
+        gameFrame.pack();
+
+        panel.add(canvas);
+        panel.setPreferredSize(new Dimension(width,height));
+
+        
+        canvas.setSize(width, height);
+
+        gameFrame.addComponentListener(new ComponentListener() {
+
+            public void componentResized(ComponentEvent e) {
+                width = e.getComponent().getWidth();
+                height = e.getComponent().getWidth();
+                panel.setSize(width, height);
+                canvas.setSize(new Dimension(e.getComponent().getSize()));
+            }
+            public void componentMoved(ComponentEvent e) {
+            }
+            public void componentShown(ComponentEvent e) {
+            }
+            public void componentHidden(ComponentEvent e) {
+            } 
+        });
+
+
+       canvas.setBackground(new Color(255,255,255,255));
+    }
+
+    public void show(){
+        gameFrame.setVisible(true);
+        canvas.setVisible(true);
+    }
+
     //SETS PARAMS
-    public Window setWindowParams(int width, int height){
-        this.windowWidth = width;
-        this.windowHeight = height;
-        return this;
+    public void setWindowSize(int width, int height){
+        this.width = width;
+        this.height = height;
+        gameFrame.setSize(width,height);
+        panel.setSize(width,height);
+        canvas.setSize(new Dimension(width,height));
     }
 
-    public int[] getWindowParams(){
-        return new int[]{this.windowWidth, this.windowHeight};
+    public Graphics2D getGraphics(){
+        return (Graphics2D) canvas.getGraphics();
     }
 
-    public Window setCanvas(Canvas canvas) {
-        this.canvas = canvas;
-        return this;
+
+
+    public int getWidth(){
+        return height;
+    }
+    public int getHeight(){
+        return width;
     }
 
-    public JPanel getPanel() {
-        return panel;
+    public void addMouseListener(MouseListener mListener) {
+        gameFrame.addMouseListener(mListener);
     }
 
-    public Window addToPanel(Component c){
-        this.panel.add(c);
-        return this;
+    public void addKeyListener(KeyListener keyListener) {
+        gameFrame.addKeyListener(keyListener);
     }
 
-    @Override
-    public synchronized void addMouseListener(MouseListener mListener) {
-        super.addMouseListener(mListener);
-    }
-
-    @Override
-    public synchronized void addKeyListener(KeyListener keyListener) {
-        super.addKeyListener(keyListener);
-    }
-
-    @Override
-    public synchronized void addMouseMotionListener(MouseMotionListener motionListener) {
-        super.addMouseMotionListener(motionListener);
+    public void addMouseMotionListener(MouseMotionListener motionListener) {
+        gameFrame.addMouseMotionListener(motionListener);
     }
 }

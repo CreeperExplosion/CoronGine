@@ -14,8 +14,9 @@ public class KeyboardHandler implements KeyListener{
         keys = new InputKey[numberOfKeys];
         keyHelper = new boolean[numberOfKeys];
 
-        for (InputKey key: keys) 
-            key = new InputKey();
+        for (int i = 0; i < numberOfKeys; i++) {
+            keys[i] = new InputKey();
+        }
         
     }
 

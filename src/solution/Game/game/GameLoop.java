@@ -1,43 +1,53 @@
-package solution.Game;
+package solution.Game.game;
 
 
-import solution.Game.input.KeyboardHandler;
-import solution.Game.input.MouseHandler;
+import solution.Game.game.logic.GameLogic;
+import solution.Game.input.Input;
+import solution.graphics.Window;
 
-public class CoronaGame implements Runnable{
+import java.awt.*;
 
-    private Thread gameThread;
+public class GameLoop implements Runnable{
 
-    private boolean running;
-
+    
+    
     public final static String GAME_NAME = "CORONA GAME";
-
+    
+    private Thread gameThread;
+    private boolean running;
     public final static int FPS = 120;
-
     public final static int TPS = 30;
-
     private static String renderTime;
+    
+    private Input input;
 
-    private KeyboardHandler keyboardHandler;
+    Window gameWindow;
 
-    private MouseHandler mouseHandler;
+    GameLogic gameLogic;
     
 
-    public CoronaGame() {
+    public GameLoop(GameLogic gameLogic) {
+        this.gameLogic = gameLogic;
         running = false;
         gameThread = new Thread(this, GAME_NAME);
 
-        keyboardHandler = new KeyboardHandler(1024);
+        gameWindow = new Window(GAME_NAME);
 
-        mouseHandler = new MouseHandler();
+        input = new Input(gameWindow);
     }
+
+    public void init(){
+      gameWindow.init();
+      gameLogic.init();
+      
+    };
 
     public void start(){
         running = true;
-        
-        
+        init();
+        gameWindow.show();
         try {
-            this.run();
+            gameThread.start();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -87,14 +97,21 @@ public class CoronaGame implements Runnable{
     }
 
     public void input(){
-        keyboardHandler.update();
+        input.update();
     }
 
     public void update(){
-
+        gameLogic.update();
     }
     public void render(){
+        Graphics2D graphics = gameWindow.getGraphics();
+        graphics.setColor(Color.WHITE);
 
+        graphics.clearRect(0, 0, gameWindow.getWidth(), gameWindow.getHeight());
+
+
+        
+        gameLogic.render(graphics);
     }
 
     public static String RENDER_TIME(){
