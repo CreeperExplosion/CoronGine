@@ -39,8 +39,27 @@ public class Player extends GameObject {
             x -= 10;
         }
 
+        if(Input.getKeyDown(Keycode.S)){
+            y += 5;
+        }
+        if(Input.getKeyDown(Keycode.W)){
+            y -= 5;
+        }
+        if(Input.getKeyHeld(Keycode.S)){
+            y += 10;
+        }
+        if(Input.getKeyHeld(Keycode.W)){
+            y -= 10;
+        }
+
 
 
     }
+
+    public void move(){
+
+    }
+
+
 
 }

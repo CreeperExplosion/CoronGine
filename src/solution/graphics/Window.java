@@ -39,10 +39,12 @@ public class Window {
         gameFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         gameFrame.setSize(width, height);
         gameFrame.setPreferredSize(new Dimension(width,height));
-        gameFrame.setContentPane(panel);
+//        gameFrame.setContentPane(panel);
         gameFrame.setLocationRelativeTo(null);
         gameFrame.setTitle(title);
         gameFrame.pack();
+        gameFrame.setResizable(false);
+        gameFrame.add(canvas);
 
         panel.add(canvas);
         panel.setPreferredSize(new Dimension(width,height));
