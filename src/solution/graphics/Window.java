@@ -2,6 +2,7 @@ package solution.graphics;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferStrategy;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.awt.event.KeyListener;
@@ -83,8 +84,10 @@ public class Window {
         canvas.setSize(new Dimension(width,height));
     }
 
-    public Graphics2D getGraphics(){
-        return (Graphics2D) canvas.getGraphics();
+    public BufferStrategy getBufferStrategy(){
+        if(gameFrame.getBufferStrategy() == null)
+            gameFrame.createBufferStrategy(3);
+        return gameFrame.getBufferStrategy();
     }
 
 

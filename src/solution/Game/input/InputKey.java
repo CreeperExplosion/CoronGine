@@ -26,7 +26,6 @@ public class InputKey {
             return;
        
         // baru aja di pencet
-        //TODO ada yang salah disini
         
         if (pressTimer.getTime() < reactionTimeinMillis){
             pressed = true;

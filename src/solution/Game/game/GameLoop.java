@@ -6,6 +6,7 @@ import solution.Game.input.Input;
 import solution.graphics.Window;
 
 import java.awt.*;
+import java.awt.image.BufferStrategy;
 
 public class GameLoop implements Runnable{
 
@@ -104,14 +105,19 @@ public class GameLoop implements Runnable{
         gameLogic.update();
     }
     public void render(){
-        Graphics2D graphics = gameWindow.getGraphics();
+
+        BufferStrategy renderBuffer = gameWindow.getBufferStrategy();
+        Graphics2D graphics = (Graphics2D) renderBuffer.getDrawGraphics();
         graphics.setColor(Color.WHITE);
 
         graphics.clearRect(0, 0, gameWindow.getWidth(), gameWindow.getHeight());
 
-
-        
         gameLogic.render(graphics);
+
+
+        // cleanup
+        renderBuffer.show();
+        graphics.dispose();
     }
 
     public static String RENDER_TIME(){
