@@ -4,26 +4,30 @@ import java.awt.Graphics2D;
 
 public abstract class GameObject {
 
-    public int x;
-    public int y;
+    public float x;
+    public float y;
+
+    public GameObject() {
+        this.init();
+    }
 
 
     public abstract void init();
 
     public abstract void render(Graphics2D graphics);
 
-    public abstract void update();
+    public abstract void update(float deltaTime);
 
     /**
      * @return the x
      */
-    public int getX() {
+    public float getX() {
         return x;
     }
     /**
      * @return the y
      */
-    public int getY() {
+    public float getY() {
         return y;
     }
 }

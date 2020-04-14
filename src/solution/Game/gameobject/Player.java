@@ -12,31 +12,30 @@ public class Player extends GameObject {
     public void init() {
         x = 0;
         y = 0;
-
     }
 
     @Override
     public void render(Graphics2D graphics) {
         graphics.setColor(Color.BLACK);
-        graphics.fillRect(x, y, 50, 50);
-
+        
+        graphics.fillRect((int)x, (int)y, 10, 10);
     }
 
     @Override
-    public void update() {
-        
+    public void update(float deltaTime) {
+
         if (Input.getKeyDown(Keycode.D)) {
-            x += 5;
+            x += 30 * deltaTime;
         }
         if(Input.getKeyHeld(Keycode.D)){
-            x += 10;
+            x += 40 * deltaTime;
         }
 
         if (Input.getKeyDown(Keycode.A)) {
-            x -= 5;
+            x -= 30 * deltaTime;
         }
         if(Input.getKeyHeld(Keycode.A)){
-            x -= 10;
+            x -= 40 * deltaTime;
         }
 
 

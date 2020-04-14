@@ -11,7 +11,6 @@ import java.awt.event.MouseMotionListener;
 
 public class Window {
 
-    private JPanel panel;
     private int width;
     private int height;
 
@@ -27,7 +26,6 @@ public class Window {
         this.title = title;
         
         gameFrame = new JFrame(title);
-        panel = new JPanel();
         canvas = new Canvas();
     }
 
@@ -39,15 +37,16 @@ public class Window {
         gameFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         gameFrame.setSize(width, height);
         gameFrame.setPreferredSize(new Dimension(width,height));
-        gameFrame.setContentPane(panel);
+        // gameFrame.setContentPane(panel);
         gameFrame.setLocationRelativeTo(null);
         gameFrame.setTitle(title);
         gameFrame.pack();
 
-        panel.add(canvas);
-        panel.setPreferredSize(new Dimension(width,height));
 
+        gameFrame.add(canvas);
         
+
+
         canvas.setSize(width, height);
 
         gameFrame.addComponentListener(new ComponentListener() {
@@ -55,7 +54,6 @@ public class Window {
             public void componentResized(ComponentEvent e) {
                 width = e.getComponent().getWidth();
                 height = e.getComponent().getWidth();
-                panel.setSize(width, height);
                 canvas.setSize(new Dimension(e.getComponent().getSize()));
             }
             public void componentMoved(ComponentEvent e) {
@@ -80,14 +78,17 @@ public class Window {
         this.width = width;
         this.height = height;
         gameFrame.setSize(width,height);
-        panel.setSize(width,height);
         canvas.setSize(new Dimension(width,height));
     }
 
     public BufferStrategy getBufferStrategy(){
-        if(gameFrame.getBufferStrategy() == null)
-            gameFrame.createBufferStrategy(3);
-        return gameFrame.getBufferStrategy();
+        if(canvas.getBufferStrategy() == null)
+            canvas.createBufferStrategy(4);
+        return canvas.getBufferStrategy();
+    }
+
+    public Graphics2D getGraphics(){
+        return (Graphics2D) canvas.getGraphics();
     }
 
 

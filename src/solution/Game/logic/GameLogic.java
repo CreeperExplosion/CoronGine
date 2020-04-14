@@ -5,5 +5,5 @@ import java.awt.Graphics2D;
 public interface GameLogic {
     public void init();
     public void render(Graphics2D graphics);
-    public void update();
+    public void update(float deltaTime);
 }

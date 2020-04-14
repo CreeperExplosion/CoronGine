@@ -74,7 +74,7 @@ public class GameLoop implements Runnable{
         
                 if (deltaU >= 1) {
                     input();
-                    update();
+                    update((float)( deltaU * timePerTick)/1000000000);
                     ticks++;
                     deltaU--;
                 }
@@ -103,21 +103,24 @@ public class GameLoop implements Runnable{
         input.update();
     }
 
-    public void update(){
-        gameLogic.update();
+    public void update(float deltaTime){
+        gameLogic.update(deltaTime);
     }
     public void render(){
 
-        BufferStrategy renderBuffer = gameWindow.getBufferStrategy();
-        Graphics2D graphics = (Graphics2D) renderBuffer.getDrawGraphics();
+
+       BufferStrategy renderBuffer = gameWindow.getBufferStrategy();
+       Graphics2D graphics = (Graphics2D) renderBuffer.getDrawGraphics();
+
+        //Graphics2D graphics = gameWindow.getGraphics();
         graphics.setColor(Color.WHITE);
 
         graphics.clearRect(0, 0, gameWindow.getWidth(), gameWindow.getHeight());
 
+
+
         gameLogic.render(graphics);
 
-
-        // cleanup
         renderBuffer.show();
         graphics.dispose();
     }

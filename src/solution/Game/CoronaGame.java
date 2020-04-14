@@ -10,12 +10,12 @@ public class CoronaGame implements GameLogic {
 
     @Override
     public void render(Graphics2D graphics) {
-        player.render(graphics);
+       player.render(graphics);
     }
 
     @Override
-    public void update() {
-        player.update();
+    public void update(float deltaTime) {
+        player.update(deltaTime);
     }
 
     @Override
