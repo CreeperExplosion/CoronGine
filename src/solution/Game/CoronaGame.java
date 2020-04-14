@@ -1,6 +1,6 @@
-package solution.Game.game;
+package solution.Game;
 
-import solution.Game.game.logic.GameLogic;
+import solution.Game.logic.GameLogic;
 import solution.Game.gameobject.Player;
 
 import java.awt.Graphics2D;

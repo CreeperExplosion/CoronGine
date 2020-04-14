@@ -1,4 +1,4 @@
-package solution.Game.game.logic;
+package solution.Game.logic;
 
 import java.awt.Graphics2D;
 

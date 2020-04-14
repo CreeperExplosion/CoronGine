@@ -1,7 +1,7 @@
-package solution.Game.game;
+package solution.Game;
 
 
-import solution.Game.game.logic.GameLogic;
+import solution.Game.logic.GameLogic;
 import solution.Game.input.Input;
 import solution.graphics.Window;
 
@@ -94,6 +94,8 @@ public class GameLoop implements Runnable{
                     timer += 1000;
                 }
             }
+
+
 
     }
 
