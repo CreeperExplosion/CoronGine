@@ -5,6 +5,7 @@ package solution;
 import solution.Game.CoronaGame;
 import solution.Game.GameLoop;
 import solution.Game.logic.GameLogic;
+import solution.Game.states.State;
 import solution.graphics.ImageLoader;
 import solution.graphics.SpriteSheet;
 
@@ -20,6 +21,7 @@ public class Main {
         GameLoop game = new GameLoop(corona);
         System.out.println();
         game.start();
+
 
     }   
 

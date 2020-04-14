@@ -9,8 +9,10 @@ import solution.graphics.SpriteSheet;
 
 public abstract class GameObject {
 
-    public float x;
-    public float y;
+    protected float x;
+    protected float y;
+    protected float height;
+    protected float width;
 
     SpriteSheet spriteSheet;
     BufferedImage texture;
@@ -25,7 +27,6 @@ public abstract class GameObject {
 
         texture = spriteSheet.get(1);
     }
-
 
     public abstract void init();
 
@@ -44,5 +45,29 @@ public abstract class GameObject {
      */
     public float getY() {
         return y;
+    }
+
+    public void setX(float x) {
+        this.x = x;
+    }
+
+    public void setY(float y) {
+        this.y = y;
+    }
+
+    public float getHeight() {
+        return height;
+    }
+
+    public float getWidth() {
+        return width;
+    }
+
+    public void setHeight(float height) {
+        this.height = height;
+    }
+
+    public void setWidth(float width) {
+        this.width = width;
     }
 }

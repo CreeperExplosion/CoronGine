@@ -3,6 +3,9 @@ package solution.Game;
 
 import solution.Game.logic.GameLogic;
 import solution.Game.input.Input;
+import solution.Game.states.GameState;
+import solution.Game.states.MenuState;
+import solution.Game.states.State;
 import solution.graphics.Window;
 
 import java.awt.*;
@@ -25,6 +28,9 @@ public class GameLoop implements Runnable{
     Window gameWindow;
 
     GameLogic gameLogic;
+
+    private State gameState;
+    private State menuState;
     
 
     public GameLoop(GameLogic gameLogic) {
@@ -33,6 +39,10 @@ public class GameLoop implements Runnable{
         gameThread = new Thread(this, GAME_NAME);
 
         gameWindow = new Window(GAME_NAME);
+        //SET STATE TO GAME STATE
+        gameState = new GameState(gameLogic);
+        menuState = new MenuState();
+        State.setState(gameState);
 
         input = new Input(gameWindow);
     }
@@ -40,6 +50,8 @@ public class GameLoop implements Runnable{
     public void init(){
       gameWindow.init();
       gameLogic.init();
+      gameState.init();
+      menuState.init();
       
     };
 
@@ -104,7 +116,10 @@ public class GameLoop implements Runnable{
     }
 
     public void update(float deltaTime){
-        gameLogic.update(deltaTime);
+        if(State.getState()!=null){
+            State.getState().update(deltaTime);
+        }
+       // gameLogic.update(deltaTime);
     }
     public void render(){
 

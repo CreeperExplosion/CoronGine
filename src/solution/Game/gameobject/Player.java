@@ -7,7 +7,7 @@ import java.awt.*;
 import solution.Game.input.Input;
 import solution.Game.input.Keycode;
 
-public class Player extends GameObject {
+public class Player extends Creatures {
 
     public Player() {
         super("/test.png");
