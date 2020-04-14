@@ -1,6 +1,7 @@
 package solution.graphics;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
 import java.awt.event.ComponentEvent;
@@ -8,6 +9,8 @@ import java.awt.event.ComponentListener;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+
+import static java.awt.Component.CENTER_ALIGNMENT;
 
 public class Window {
 
@@ -37,10 +40,11 @@ public class Window {
         gameFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         gameFrame.setSize(width, height);
         gameFrame.setPreferredSize(new Dimension(width,height));
-        // gameFrame.setContentPane(panel);
         gameFrame.setLocationRelativeTo(null);
         gameFrame.setTitle(title);
         gameFrame.pack();
+        gameFrame.setResizable(false);
+        gameFrame.add(canvas);
 
 
         gameFrame.add(canvas);

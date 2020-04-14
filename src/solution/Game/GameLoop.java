@@ -17,7 +17,7 @@ public class GameLoop implements Runnable{
     private Thread gameThread;
     private boolean running;
     public final static int FPS = 120;
-    public final static int TPS = 30;
+    public final static int TPS = 60;
     private static String renderTime;
     
     private Input input;
@@ -117,7 +117,7 @@ public class GameLoop implements Runnable{
 
         graphics.clearRect(0, 0, gameWindow.getWidth(), gameWindow.getHeight());
 
-
+        gameLogic.render(graphics);
 
         gameLogic.render(graphics);
 
