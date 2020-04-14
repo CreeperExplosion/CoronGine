@@ -1,30 +1,16 @@
 package solution.Game.gameobject;
 
 import java.awt.Graphics2D;
+
 import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 
 import solution.Game.input.Input;
 import solution.Game.input.Keycode;
-import solution.graphics.ImageLoader;
-import solution.graphics.SpriteSheet;
 
 public class Player extends GameObject {
 
-    SpriteSheet spriteSheet;
-    BufferedImage image;
-
     public Player() {
-        try {
-            image = ImageLoader.loadImage("/test.png");
-            spriteSheet = new SpriteSheet(image);
-            System.out.println("YES");
-        } catch (IOException e) {
-            System.out.println("NO");
-            e.printStackTrace();
-        }
+        super("/test.png");
     }
 
     @Override
@@ -32,6 +18,7 @@ public class Player extends GameObject {
 
         x = 0;
         y = 0;
+        
     }
 
     @Override
@@ -39,9 +26,9 @@ public class Player extends GameObject {
 
         graphics.setColor(Color.BLACK);
         
-        graphics.fillRect((int)x, (int)y, 10, 10);
+        graphics.drawImage(texture,(int)x, (int)y, null);
     }
-
+    
     @Override
     public void update(float deltaTime) {
 
@@ -60,16 +47,16 @@ public class Player extends GameObject {
         }
 
         if(Input.getKeyDown(Keycode.S)){
-            y += 5;
+            y += 30 * deltaTime;
         }
         if(Input.getKeyDown(Keycode.W)){
-            y -= 5;
+            y -= 30* deltaTime;
         }
         if(Input.getKeyHeld(Keycode.S)){
-            y += 10;
+            y += 40 * deltaTime;
         }
         if(Input.getKeyHeld(Keycode.W)){
-            y -= 10;
+            y -= 40 * deltaTime;
         }
 
 

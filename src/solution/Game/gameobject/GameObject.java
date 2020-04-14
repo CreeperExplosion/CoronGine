@@ -1,14 +1,29 @@
 package solution.Game.gameobject;
 
 import java.awt.Graphics2D;
+import java.awt.image.*;
+import java.io.IOException;
+
+import solution.graphics.ImageLoader;
+import solution.graphics.SpriteSheet;
 
 public abstract class GameObject {
 
     public float x;
     public float y;
 
-    public GameObject() {
+    SpriteSheet spriteSheet;
+    BufferedImage texture;
+
+    public GameObject(String spriteSheetPath) {
         this.init();
+        try {
+            spriteSheet = new SpriteSheet(ImageLoader.loadImage(spriteSheetPath));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        texture = spriteSheet.get(1);
     }
 
 
