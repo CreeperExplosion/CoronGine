@@ -1,6 +1,7 @@
 package solution.graphics;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
 import java.awt.event.ComponentEvent;
@@ -8,6 +9,8 @@ import java.awt.event.ComponentListener;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+
+import static java.awt.Component.CENTER_ALIGNMENT;
 
 public class Window {
 
