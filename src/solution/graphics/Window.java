@@ -1,7 +1,6 @@
 package solution.graphics;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
 import java.awt.event.ComponentEvent;
@@ -9,8 +8,6 @@ import java.awt.event.ComponentListener;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
-
-import static java.awt.Component.CENTER_ALIGNMENT;
 
 public class Window {
 
@@ -38,27 +35,39 @@ public class Window {
 
     public void init() {
         gameFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        gameFrame.setSize(width, height);
-        gameFrame.setPreferredSize(new Dimension(width,height));
-        gameFrame.setLocationRelativeTo(null);
         gameFrame.setTitle(title);
         gameFrame.pack();
-        gameFrame.setResizable(false);
+        gameFrame.setResizable(true);
         gameFrame.add(canvas);
 
 
         gameFrame.add(canvas);
         
 
-
         canvas.setSize(width, height);
+
+        gameFrame.pack();
 
         gameFrame.addComponentListener(new ComponentListener() {
 
             public void componentResized(ComponentEvent e) {
-                width = e.getComponent().getWidth();
-                height = e.getComponent().getWidth();
-                canvas.setSize(new Dimension(e.getComponent().getSize()));
+
+                int newHeight = e.getComponent().getHeight();
+                int newWidth = e.getComponent().getWidth();
+                if(height != newHeight){
+
+                    height = newHeight;
+                    width = height *16/9;
+                }
+
+                if(width != newWidth){
+
+                    width = newWidth;
+                    height = width *9/16;
+                }
+
+                setWindowSize(width, height);
+
             }
             public void componentMoved(ComponentEvent e) {
             }
@@ -77,6 +86,7 @@ public class Window {
         canvas.setVisible(true);
         gameFrame.requestFocus();
         canvas.requestFocus();
+        gameFrame.setLocationRelativeTo(null);
     }
 
     //SETS PARAMS
@@ -99,11 +109,19 @@ public class Window {
 
 
 
-    public int getWidth(){
-        return height;
-    }
-    public int getHeight(){
+    
+    /**
+     * @return the width
+     */
+    public int getWidth() {
         return width;
+    }
+
+    /**
+     * @return the height
+     */
+    public int getHeight() {
+        return height;
     }
 
     public void addMouseListener(MouseListener mListener) {

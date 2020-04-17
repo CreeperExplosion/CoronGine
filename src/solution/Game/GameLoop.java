@@ -23,12 +23,20 @@ public class GameLoop implements Runnable{
     public final static int FPS = 120;
     public final static int TPS = 60;
     private static String renderTime;
+
     
     private Input input;
 
     Window gameWindow;
 
     GameLogic gameLogic;
+
+
+    private int rendererY = 216;
+    private int rendererX = rendererY * 16/9;
+
+    private final int WINDOW_HEIGHT = 480;
+    private final int WINDOW_WIDTH = WINDOW_HEIGHT * 16 /9;
 
     private State gameState;
     private State menuState;
@@ -42,8 +50,9 @@ public class GameLoop implements Runnable{
         running = false;
         gameThread = new Thread(this, GAME_NAME);
 
-        gameWindow = new Window(GAME_NAME);
-        renderer = new Renderer();
+        gameWindow = new Window(WINDOW_WIDTH, WINDOW_HEIGHT,GAME_NAME);
+
+        renderer = new Renderer(rendererX, rendererY ,gameWindow);
         //SET STATE TO GAME STATE
         gameState = new GameState(gameLogic);
         menuState = new MenuState();
@@ -123,6 +132,7 @@ public class GameLoop implements Runnable{
     public void update(float deltaTime){
         if(State.getState()!=null){
             State.getState().update(deltaTime);
+
         }
        // gameLogic.update(deltaTime);
     }
@@ -141,7 +151,7 @@ public class GameLoop implements Runnable{
 
         gameLogic.render(renderer);
 
-        renderer.render(graphics);
+        renderer.render(graphics, gameWindow);
         renderBuffer.show();
         graphics.dispose();
     }

@@ -4,32 +4,56 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.awt.geom.AffineTransform;
 
 public class Renderer {
 
     public static final int Z_LAYERS_NUMBER = 3;
     ArrayList<HashSet<RenderObject>> zLayers;
+    Graphics2D world; 
+    double yScale;
+    double xScale;
+    Dimension renderDimension;
+    public Renderer(int rendererSizeX, int rendererSizeY, Window window) {
 
+        System.out.println(rendererSizeY +":" + rendererSizeX);
+        
+        System.out.println(window.getHeight() + ":"  + window.getWidth());
+        
+        xScale = window.getWidth()/rendererSizeX;
+        yScale =   window.getHeight()/rendererSizeY;
 
-    public Renderer() {
+        System.out.println(xScale);
+        System.out.println(yScale);
+
+        renderDimension = new Dimension(rendererSizeX, rendererSizeY);
 
         zLayers = new ArrayList<HashSet<RenderObject>>(3);
 
         for (int i = 0; i < Z_LAYERS_NUMBER; i++) {
             zLayers.add(new HashSet<RenderObject>());
         }
-
-        System.out.println(zLayers.size());
     }
 
 
-    public void render(Graphics screen) {
-        Graphics2D graph2d =(Graphics2D) screen;
+    public void render(Graphics screen, Window window) {
+        Graphics2D screen2D = (Graphics2D) screen;
+        
+        xScale = window.getWidth()/renderDimension.getWidth();
+        yScale = window.getHeight()/renderDimension.getHeight();
+
+        AffineTransform oldAT = screen2D.getTransform();
+        
+        screen2D.scale(xScale, yScale);
+
+
         for ( HashSet<RenderObject> zLayer : zLayers) {
             for (RenderObject renderObject : zLayer) {
-                graph2d.drawImage(renderObject.image, renderObject.posX, renderObject.posY, null);
+                screen2D.drawImage(renderObject.image, renderObject.posX, renderObject.posY, null);
             }
         }
+
+        screen2D.setTransform(oldAT);
 
         cleanup();
     }
