@@ -6,6 +6,7 @@ import solution.Game.input.Input;
 import solution.Game.states.GameState;
 import solution.Game.states.MenuState;
 import solution.Game.states.State;
+import solution.graphics.Renderer;
 import solution.graphics.Window;
 
 import java.awt.*;
@@ -31,6 +32,9 @@ public class GameLoop implements Runnable{
 
     private State gameState;
     private State menuState;
+
+
+    private Renderer renderer;
     
 
     public GameLoop(GameLogic gameLogic) {
@@ -39,6 +43,7 @@ public class GameLoop implements Runnable{
         gameThread = new Thread(this, GAME_NAME);
 
         gameWindow = new Window(GAME_NAME);
+        renderer = new Renderer();
         //SET STATE TO GAME STATE
         gameState = new GameState(gameLogic);
         menuState = new MenuState();
@@ -132,10 +137,11 @@ public class GameLoop implements Runnable{
 
         graphics.clearRect(0, 0, gameWindow.getWidth(), gameWindow.getHeight());
 
-        gameLogic.render(graphics);
 
-        gameLogic.render(graphics);
 
+        gameLogic.render(renderer);
+
+        renderer.render(graphics);
         renderBuffer.show();
         graphics.dispose();
     }

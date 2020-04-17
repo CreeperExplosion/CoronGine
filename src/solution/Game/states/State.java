@@ -2,6 +2,8 @@ package solution.Game.states;
 
 import java.awt.*;
 
+import solution.graphics.Renderer;
+
 public abstract class State{
 
     private static State currentState = null;
@@ -15,6 +17,6 @@ public abstract class State{
     }
 
     public abstract void init();
-    public abstract void render(Graphics2D graphics);
+    public abstract void render(Renderer renderer);
     public abstract void update(float deltaTime);
 }

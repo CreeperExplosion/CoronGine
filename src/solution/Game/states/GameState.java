@@ -3,6 +3,7 @@ package solution.Game.states;
 import solution.Game.assets.Assets;
 import solution.Game.gameobject.Player;
 import solution.Game.logic.GameLogic;
+import solution.graphics.Renderer;
 
 import java.awt.*;
 
@@ -19,8 +20,8 @@ public class GameState extends State {
     }
 
     @Override
-    public void render(Graphics2D graphics) {
-        gameLogic.render(graphics);
+    public void render(Renderer renderer) {
+        gameLogic.render(renderer);
     }
 
     @Override

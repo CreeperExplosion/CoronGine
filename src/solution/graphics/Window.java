@@ -75,6 +75,8 @@ public class Window {
     public void show(){
         gameFrame.setVisible(true);
         canvas.setVisible(true);
+        gameFrame.requestFocus();
+        canvas.requestFocus();
     }
 
     //SETS PARAMS
@@ -105,14 +107,14 @@ public class Window {
     }
 
     public void addMouseListener(MouseListener mListener) {
-        gameFrame.addMouseListener(mListener);
+        canvas.addMouseListener(mListener);
     }
 
     public void addKeyListener(KeyListener keyListener) {
-        gameFrame.addKeyListener(keyListener);
+        canvas.addKeyListener(keyListener);
     }
 
     public void addMouseMotionListener(MouseMotionListener motionListener) {
-        gameFrame.addMouseMotionListener(motionListener);
+        canvas.addMouseMotionListener(motionListener);
     }
 }

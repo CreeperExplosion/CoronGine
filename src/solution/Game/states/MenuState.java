@@ -1,6 +1,7 @@
 package solution.Game.states;
 
 import solution.Game.logic.GameLogic;
+import solution.graphics.Renderer;
 
 import java.awt.*;
 
@@ -16,7 +17,7 @@ public class MenuState extends State {
     }
 
     @Override
-    public void render(Graphics2D graphics) {
+    public void render(Renderer renderer) {
 
     }
 

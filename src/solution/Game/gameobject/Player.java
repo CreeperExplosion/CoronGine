@@ -6,6 +6,7 @@ import java.awt.*;
 
 import solution.Game.input.Input;
 import solution.Game.input.Keycode;
+import solution.graphics.Renderer;
 
 public class Player extends Creatures {
 
@@ -22,11 +23,11 @@ public class Player extends Creatures {
     }
 
     @Override
-    public void render(Graphics2D graphics) {
-
-        graphics.setColor(Color.BLACK);
+    public void render(Renderer Renderer) {
         
-        graphics.drawImage(texture,(int)x, (int)y, null);
+        Renderer.drawImage(spriteSheet.get(1), (int) 20, (int) 20, 1);
+        
+        Renderer.drawImage(texture,(int)x, (int)y, 0);
     }
     
     @Override

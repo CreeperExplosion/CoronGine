@@ -5,6 +5,7 @@ import java.awt.image.*;
 import java.io.IOException;
 
 import solution.graphics.ImageLoader;
+import solution.graphics.Renderer;
 import solution.graphics.SpriteSheet;
 
 public abstract class GameObject {
@@ -25,12 +26,12 @@ public abstract class GameObject {
             e.printStackTrace();
         }
 
-        texture = spriteSheet.get(1);
+        texture = spriteSheet.get(0);
     }
 
     public abstract void init();
 
-    public abstract void render(Graphics2D graphics);
+    public abstract void render(Renderer renderer);
 
     public abstract void update(float deltaTime);
 
