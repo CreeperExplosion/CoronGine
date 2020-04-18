@@ -61,7 +61,11 @@ public class Renderer {
 
         for (HashSet<RenderObject> zLayer : zLayers) {
             for (RenderObject renderObject : zLayer) {
-                screen2D.drawImage(renderObject.image, renderObject.posX, renderObject.posY, null);
+                AffineTransform at = screen2D.getTransform();
+                screen2D.translate(renderObject.posX, renderObject.posY);
+                screen2D.drawImage(renderObject.image, 0, 0, null);
+
+                screen2D.setTransform(at);
             }
         }
         
@@ -71,7 +75,7 @@ public class Renderer {
         cleanup();
     }
 
-    public void drawImage(BufferedImage image, int posX, int posY, int z) {
+    public void drawImage(BufferedImage image, float posX, float posY, int z) {
         z = z + 1;
 
         RenderObject obj = new RenderObject(image, posX, posY);
@@ -82,12 +86,8 @@ public class Renderer {
 
     }
 
-    public void drawImage(BufferedImage image, float x, float y, int z) {
-        this.drawImage(image, (int) x, (int) y, z);
-    }
-
     public void drawImage(BufferedImage image, float x, float y) {
-        this.drawImage(image, (int) x, (int) y, 0);
+        this.drawImage(image,  x, y, 0);
     }
 
     private void cleanup() {
@@ -111,11 +111,11 @@ public class Renderer {
     }
 
     class RenderObject {
-        int posX;
-        int posY;
+        float posX;
+        float posY;
         BufferedImage image;
 
-        RenderObject(BufferedImage image, int posX, int posY) {
+        RenderObject(BufferedImage image, float posX, float posY) {
             this.posX = posX;
             this.posY = posY;
 
