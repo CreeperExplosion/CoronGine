@@ -1,9 +1,9 @@
 package solution.coronagame;
 
-import solution.engine.logic.GameLogic;
+import solution.engine.logic.GameImplementation;
 import solution.engine.graphics.Renderer;
 
-public class CoronaGame implements GameLogic {
+public class CoronaGame implements GameImplementation {
 
     Player player;
 

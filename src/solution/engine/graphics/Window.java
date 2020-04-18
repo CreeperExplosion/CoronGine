@@ -18,14 +18,14 @@ public class Window {
 
     String title;
 
-    JFrame gameFrame;
+    JFrame frame;
 
     public Window(int width, int height, String title) {
         this.width = width;
         this.height = height;
         this.title = title;
         
-        gameFrame = new JFrame(title);
+        frame = new JFrame(title);
         canvas = new Canvas();
     }
 
@@ -34,67 +34,67 @@ public class Window {
     }
 
     public void init() {
-        gameFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        gameFrame.setTitle(title);
-        gameFrame.pack();
-        gameFrame.setResizable(false);
-        gameFrame.add(canvas);
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        frame.setTitle(title);
+        frame.pack();
+        frame.setResizable(false);
+        frame.add(canvas);
 
 
-        gameFrame.add(canvas);
+        frame.add(canvas);
         
 
         canvas.setSize(width, height);
 
-        gameFrame.pack();
+        frame.pack();
 
-        gameFrame.addComponentListener(new ComponentListener() {
+        // frame.addComponentListener(new ComponentListener() {
 
-            public void componentResized(ComponentEvent e) {
+        //     public void componentResized(ComponentEvent e) {
 
-                int newHeight = e.getComponent().getHeight();
-                int newWidth = e.getComponent().getWidth();
-                if(height != newHeight){
+        //         int newHeight = e.getComponent().getHeight();
+        //         int newWidth = e.getComponent().getWidth();
+        //         if(height != newHeight){
 
-                    height = newHeight;
-                    width = height *16/9;
-                }
+        //             height = newHeight;
+        //             width = height *16/9;
+        //         }
 
-                if(width != newWidth){
+        //         if(width != newWidth){
 
-                    width = newWidth;
-                    height = width *9/16;
+        //             width = newWidth;
+        //             height = width *9/16;
 
-                }
+        //         }
 
-                setWindowSize(width, height);
+        //         setWindowSize(width, height);
 
-            }
-            public void componentMoved(ComponentEvent e) {
-            }
-            public void componentShown(ComponentEvent e) {
-            }
-            public void componentHidden(ComponentEvent e) {
-            } 
-        });
+        //     }
+        //     public void componentMoved(ComponentEvent e) {
+        //     }
+        //     public void componentShown(ComponentEvent e) {
+        //     }
+        //     public void componentHidden(ComponentEvent e) {
+        //     } 
+        // });
 
 
        canvas.setBackground(new Color(255,255,255,255));
     }
 
     public void show(){
-        gameFrame.setVisible(true);
+        frame.setVisible(true);
         canvas.setVisible(true);
-        gameFrame.requestFocus();
+        frame.requestFocus();
         canvas.requestFocus();
-        gameFrame.setLocationRelativeTo(null);
+        frame.setLocationRelativeTo(null);
     }
 
     //SETS PARAMS
     public void setWindowSize(int width, int height){
         this.width = width;
         this.height = height;
-        gameFrame.setSize(width,height);
+        frame.setSize(width,height);
         canvas.setSize(new Dimension(width,height));
     }
 

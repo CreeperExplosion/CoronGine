@@ -20,11 +20,13 @@ public class Player extends Creatures {
     }
 
     @Override
-    public void render(Renderer Renderer) {
+    public void render(Renderer renderer) {
+        float x1 = (float) renderer.getRenderDimension().getWidth()/2f;
+        float y1 =  (float)renderer.getRenderDimension().getHeight()/2f;
+        renderer.drawImage(spriteSheet.get(1),  x1- 8 ,  y1 - 8, 1);
         
-        Renderer.drawImage(spriteSheet.get(1),  20,  20, 1);
-        
-        Renderer.drawImage(texture,x, y, 0);
+
+        renderer.drawImage(texture,x, y, 0);
     }
     
     @Override

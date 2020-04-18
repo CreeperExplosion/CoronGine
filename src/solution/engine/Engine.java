@@ -1,7 +1,7 @@
 package solution.engine;
 
 
-import solution.engine.logic.GameLogic;
+import solution.engine.logic.GameImplementation;
 import solution.engine.input.Input;
 import solution.engine.states.GameState;
 import solution.engine.states.MenuState;
@@ -12,7 +12,7 @@ import solution.engine.graphics.Window;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
 
-public class GameLoop implements Runnable{
+public class Engine implements Runnable{
 
     
     
@@ -29,13 +29,13 @@ public class GameLoop implements Runnable{
 
     Window gameWindow;
 
-    GameLogic gameLogic;
+    GameImplementation gameImplementation;
 
 
     private int rendererY = 216;
     private int rendererX = rendererY * 16/9;
 
-    private final int WINDOW_HEIGHT = 480;
+    private final int WINDOW_HEIGHT = 720;
     private final int WINDOW_WIDTH = WINDOW_HEIGHT * 16 /9;
 
     private State gameState;
@@ -45,8 +45,8 @@ public class GameLoop implements Runnable{
     private Renderer renderer;
     
 
-    public GameLoop(GameLogic gameLogic) {
-        this.gameLogic = gameLogic;
+    public Engine(GameImplementation gameImplementation) {
+        this.gameImplementation = gameImplementation;
         running = false;
         gameThread = new Thread(this, GAME_NAME);
 
@@ -54,7 +54,7 @@ public class GameLoop implements Runnable{
 
         renderer = new Renderer(rendererX, rendererY ,gameWindow);
         //SET STATE TO GAME STATE
-        gameState = new GameState(gameLogic);
+        gameState = new GameState(gameImplementation);
         menuState = new MenuState();
         State.setState(gameState);
 
@@ -63,7 +63,7 @@ public class GameLoop implements Runnable{
 
     public void init(){
       gameWindow.init();
-      gameLogic.init();
+      gameImplementation.init();
       gameState.init();
       menuState.init();
       
@@ -149,7 +149,7 @@ public class GameLoop implements Runnable{
 
 
 
-        gameLogic.render(renderer);
+        gameImplementation.render(renderer);
 
         renderer.render(graphics, gameWindow);
         renderBuffer.show();

@@ -1,27 +1,27 @@
 package solution.engine.states;
 
-import solution.engine.logic.GameLogic;
+import solution.engine.logic.GameImplementation;
 import solution.engine.graphics.Renderer;
 
 public class GameState extends State {
-    GameLogic gameLogic;
+    GameImplementation gameImplementation;
 
-    public GameState(GameLogic gameLogic){
-        this.gameLogic = gameLogic;
+    public GameState(GameImplementation gameImplementation){
+        this.gameImplementation = gameImplementation;
     }
 
     @Override
     public void init() {
-        gameLogic.init();
+        gameImplementation.init();
     }
 
     @Override
     public void render(Renderer renderer) {
-        gameLogic.render(renderer);
+        gameImplementation.render(renderer);
     }
 
     @Override
     public void update(float deltaTime) {
-        gameLogic.update(deltaTime);
+        gameImplementation.update(deltaTime);
     }
 }
