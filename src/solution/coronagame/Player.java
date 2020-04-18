@@ -21,17 +21,16 @@ public class Player extends Creatures {
 
     @Override
     public void render(Renderer renderer) {
-        float x1 = (float) renderer.getRenderDimension().getWidth()/2f;
-        float y1 =  (float)renderer.getRenderDimension().getHeight()/2f;
+        float x1 = - (float) renderer.getRenderDimension().getWidth()/2f;
+        float y1 = - (float)renderer.getRenderDimension().getHeight()/2f;
         renderer.drawImage(spriteSheet.get(1),  x1- 8 ,  y1 - 8, 1);
         
 
-        renderer.drawImage(texture,x, y, 0);
+        renderer.drawImage(texture,x-8, y-8, 0);
     }
     
     @Override
     public void update(float deltaTime) {
-
         if (Input.getKeyDown(Keycode.D)) {
             x += 30 * deltaTime;
         }

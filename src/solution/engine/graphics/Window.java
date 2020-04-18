@@ -109,7 +109,9 @@ public class Window {
     }
 
 
-
+    public void AppendTitle(String app) {
+        frame.setTitle(title+ "--" +app);
+    }
     
     /**
      * @return the width

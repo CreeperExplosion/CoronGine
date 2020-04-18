@@ -10,13 +10,12 @@ public class Renderer {
 
     public static final int Z_LAYERS_NUMBER = 3;
     ArrayList<HashSet<RenderObject>> zLayers;
-    Graphics2D world;
     float yScale;
     float xScale;
     Dimension renderDimension;
 
+    Camera camera;
 
-    boolean showCalibration =true;
 
     public Renderer(int rendererSizeX, int rendererSizeY, Window window) {
 
@@ -30,6 +29,7 @@ public class Renderer {
         for (int i = 0; i < Z_LAYERS_NUMBER; i++) {
             zLayers.add(new HashSet<RenderObject>());
         }
+        camera = null;
     }
 
     public void render(Graphics screen, Window window) {
@@ -41,30 +41,33 @@ public class Renderer {
 
         AffineTransform oldAT = screen2D.getTransform();
 
+
+        // setting world coordinates to screen
+        screen2D.translate(window.getWidth()/2, window.getHeight()/2);
         screen2D.scale(xScale, yScale);
+
+        // camera transformation
+        screen2D.translate(camera.getX(), camera.getY());
+        screen2D.scale(camera.getZoom(), camera.getZoom());
+
+        screen2D.setRenderingHint( 
+                RenderingHints.KEY_ANTIALIASING, 
+                RenderingHints.VALUE_ANTIALIAS_ON);
+        screen2D.setRenderingHint(
+                RenderingHints.KEY_RENDERING, 
+                RenderingHints.VALUE_RENDER_QUALITY);
+        screen2D.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION, 
+                RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);      
 
         for (HashSet<RenderObject> zLayer : zLayers) {
             for (RenderObject renderObject : zLayer) {
                 screen2D.drawImage(renderObject.image, renderObject.posX, renderObject.posY, null);
             }
         }
-
-        if(showCalibration){
-            screen2D.setColor(Color.BLUE);
-            screen2D.drawOval((int) (renderDimension.getWidth()-6) / 2, (int) (renderDimension.getHeight()-6) / 2, 6, 6);
-            screen2D.drawOval(-3, -3, 6, 6);
-            screen2D.drawOval((int) (renderDimension.getWidth()-3), (int) (renderDimension.getHeight()-2.6), 6, 6);
-            screen2D.drawOval((int) (renderDimension.getWidth()-3), 0-3, 6, 6);
-            screen2D.drawOval(0-3, (int) (renderDimension.getHeight()-3), 6, 6);
-    
-    
-            screen2D.drawLine((int)renderDimension.getWidth()/2, 0, (int)renderDimension.getWidth()/2, (int)renderDimension.getHeight());
-            screen2D.drawLine(0, (int)renderDimension.getHeight()/2, (int)renderDimension.getWidth(), (int)renderDimension.getHeight()/2);
-        }
+        
         
 
         screen2D.setTransform(oldAT);
-
         cleanup();
     }
 
@@ -93,15 +96,13 @@ public class Renderer {
         for (int i = 0; i < Z_LAYERS_NUMBER; i++) {
             zLayers.add(new HashSet<RenderObject>());
         }
+
+        camera = null;
     }
 
-    /**
-     * @param showCalibration the showCalibration to set
-     */
-    public void setShowCalibration(boolean showCalibration) {
-        this.showCalibration = showCalibration;
+    public void setCamera(Camera camera){
+        this.camera = camera;
     }
-
     /**
      * @return the renderDimension
      */
