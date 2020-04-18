@@ -1,13 +1,13 @@
-package solution.Game;
+package solution.engine;
 
 
-import solution.Game.logic.GameLogic;
-import solution.Game.input.Input;
-import solution.Game.states.GameState;
-import solution.Game.states.MenuState;
-import solution.Game.states.State;
-import solution.graphics.Renderer;
-import solution.graphics.Window;
+import solution.engine.logic.GameLogic;
+import solution.engine.input.Input;
+import solution.engine.states.GameState;
+import solution.engine.states.MenuState;
+import solution.engine.states.State;
+import solution.engine.graphics.Renderer;
+import solution.engine.graphics.Window;
 
 import java.awt.*;
 import java.awt.image.BufferStrategy;

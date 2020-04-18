@@ -2,9 +2,9 @@ package solution;
 
 
 
-import solution.Game.CoronaGame;
-import solution.Game.GameLoop;
-import solution.Game.logic.GameLogic;
+import solution.coronagame.CoronaGame;
+import solution.engine.GameLoop;
+import solution.engine.logic.GameLogic;
 
 public class Main {
 

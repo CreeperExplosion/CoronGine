@@ -1,6 +1,6 @@
-package solution.Game.input;
+package solution.engine.input;
 
-import solution.graphics.Window;
+import solution.engine.graphics.Window;
 
 public class Input {
 

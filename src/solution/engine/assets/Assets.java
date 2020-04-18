@@ -1,7 +1,7 @@
-package solution.Game.assets;
+package solution.engine.assets;
 
-import solution.graphics.ImageLoader;
-import solution.graphics.SpriteSheet;
+import solution.engine.graphics.ImageLoader;
+import solution.engine.graphics.SpriteSheet;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;

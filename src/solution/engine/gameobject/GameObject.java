@@ -1,12 +1,11 @@
-package solution.Game.gameobject;
+package solution.engine.gameobject;
 
-import java.awt.Graphics2D;
 import java.awt.image.*;
 import java.io.IOException;
 
-import solution.graphics.ImageLoader;
-import solution.graphics.Renderer;
-import solution.graphics.SpriteSheet;
+import solution.engine.graphics.ImageLoader;
+import solution.engine.graphics.Renderer;
+import solution.engine.graphics.SpriteSheet;
 
 public abstract class GameObject {
 
@@ -15,8 +14,8 @@ public abstract class GameObject {
     protected float height;
     protected float width;
 
-    SpriteSheet spriteSheet;
-    BufferedImage texture;
+    protected SpriteSheet spriteSheet;
+    protected BufferedImage texture;
 
     public GameObject(String spriteSheetPath) {
         this.init();

@@ -1,6 +1,5 @@
-package solution.graphics;
+package solution.engine.graphics;
 
-import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class SpriteSheet {

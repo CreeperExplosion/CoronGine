@@ -1,11 +1,7 @@
-package solution.Game.states;
+package solution.engine.states;
 
-import solution.Game.assets.Assets;
-import solution.Game.gameobject.Player;
-import solution.Game.logic.GameLogic;
-import solution.graphics.Renderer;
-
-import java.awt.*;
+import solution.engine.logic.GameLogic;
+import solution.engine.graphics.Renderer;
 
 public class GameState extends State {
     GameLogic gameLogic;

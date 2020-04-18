@@ -1,6 +1,6 @@
-package solution.Game.input;
+package solution.engine.input;
 
-import solution.Game.Util.Timer;
+import solution.engine.Util.Timer;
 
 public class InputKey {
 

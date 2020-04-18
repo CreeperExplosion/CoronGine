@@ -1,12 +1,9 @@
-package solution.Game.gameobject;
+package solution.coronagame;
 
-import java.awt.Graphics2D;
-
-import java.awt.*;
-
-import solution.Game.input.Input;
-import solution.Game.input.Keycode;
-import solution.graphics.Renderer;
+import solution.engine.gameobject.Creatures;
+import solution.engine.input.Input;
+import solution.engine.input.Keycode;
+import solution.engine.graphics.Renderer;
 
 public class Player extends Creatures {
 
@@ -25,9 +22,9 @@ public class Player extends Creatures {
     @Override
     public void render(Renderer Renderer) {
         
-        Renderer.drawImage(spriteSheet.get(1), (int) 20, (int) 20, 1);
+        Renderer.drawImage(spriteSheet.get(1),  20,  20, 1);
         
-        Renderer.drawImage(texture,(int)x, (int)y, 0);
+        Renderer.drawImage(texture,x, y, 0);
     }
     
     @Override

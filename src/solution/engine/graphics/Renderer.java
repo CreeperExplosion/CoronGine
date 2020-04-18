@@ -1,4 +1,4 @@
-package solution.graphics;
+package solution.engine.graphics;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -15,16 +15,9 @@ public class Renderer {
     double xScale;
     Dimension renderDimension;
     public Renderer(int rendererSizeX, int rendererSizeY, Window window) {
-
-        System.out.println(rendererSizeY +":" + rendererSizeX);
-        
-        System.out.println(window.getHeight() + ":"  + window.getWidth());
         
         xScale = window.getWidth()/rendererSizeX;
         yScale =   window.getHeight()/rendererSizeY;
-
-        System.out.println(xScale);
-        System.out.println(yScale);
 
         renderDimension = new Dimension(rendererSizeX, rendererSizeY);
 

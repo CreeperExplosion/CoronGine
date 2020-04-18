@@ -1,8 +1,6 @@
-package solution.Game.logic;
+package solution.engine.logic;
 
-import java.awt.Graphics2D;
-
-import solution.graphics.Renderer;
+import solution.engine.graphics.Renderer;
 
 
 public interface GameLogic {

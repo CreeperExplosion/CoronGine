@@ -1,4 +1,4 @@
-package solution.Game.Util;
+package solution.engine.Util;
 
 public class Timer {
 

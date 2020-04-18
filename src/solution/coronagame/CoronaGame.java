@@ -1,10 +1,8 @@
-package solution.Game;
+package solution.coronagame;
 
-import solution.Game.logic.GameLogic;
-import solution.graphics.Renderer;
-import solution.Game.gameobject.Player;
+import solution.engine.logic.GameLogic;
+import solution.engine.graphics.Renderer;
 
-import java.awt.Graphics2D;
 public class CoronaGame implements GameLogic {
 
     Player player;

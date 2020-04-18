@@ -1,4 +1,4 @@
-package solution.Game.input;
+package solution.engine.input;
 
 
 public class Keycode{

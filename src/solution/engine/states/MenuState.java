@@ -1,9 +1,6 @@
-package solution.Game.states;
+package solution.engine.states;
 
-import solution.Game.logic.GameLogic;
-import solution.graphics.Renderer;
-
-import java.awt.*;
+import solution.engine.graphics.Renderer;
 
 public class MenuState extends State {
 

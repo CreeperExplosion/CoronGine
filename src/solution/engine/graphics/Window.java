@@ -1,4 +1,4 @@
-package solution.graphics;
+package solution.engine.graphics;
 
 import javax.swing.*;
 import java.awt.*;
@@ -37,7 +37,7 @@ public class Window {
         gameFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         gameFrame.setTitle(title);
         gameFrame.pack();
-        gameFrame.setResizable(true);
+        gameFrame.setResizable(false);
         gameFrame.add(canvas);
 
 
@@ -64,6 +64,7 @@ public class Window {
 
                     width = newWidth;
                     height = width *9/16;
+
                 }
 
                 setWindowSize(width, height);

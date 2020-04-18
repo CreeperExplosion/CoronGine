@@ -1,8 +1,6 @@
-package solution.Game.states;
+package solution.engine.states;
 
-import java.awt.*;
-
-import solution.graphics.Renderer;
+import solution.engine.graphics.Renderer;
 
 public abstract class State{
 
