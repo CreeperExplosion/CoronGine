@@ -1,6 +1,7 @@
 package solution.engine;
 
 import solution.engine.logic.GameImplementation;
+import solution.engine.physics.CollisionHandler;
 import solution.engine.input.Input;
 import solution.engine.gameobject.ObjectHandler;
 import solution.engine.graphics.Camera;
@@ -42,6 +43,7 @@ public class Engine implements Runnable {
     private Window gameWindow;
     private GameImplementation gameImplementation;
     private ObjectHandler objectHandler;
+    private CollisionHandler collisionHandler;
     //////////////////
 
     //
@@ -96,6 +98,8 @@ public class Engine implements Runnable {
         input = new Input(gameWindow);
 
         objectHandler = new ObjectHandler();
+
+        collisionHandler = new CollisionHandler();
     }
 
     public void init() {
@@ -164,6 +168,7 @@ public class Engine implements Runnable {
     public void update(float deltaTime) {
         objectHandler.update(deltaTime);
         gameImplementation.update(deltaTime);
+        collisionHandler.update();
 
       //  gameWindow.AppendTitle(renderTime);
     }

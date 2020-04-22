@@ -4,9 +4,8 @@ import solution.engine.gameobject.properties.Renderable;
 import solution.engine.gameobject.properties.Updateable;
 import solution.engine.physics.Hitbox;
 
-public abstract class Creatures extends GameObject implements Renderable, Updateable{
+public abstract class Creatures extends CollisionObject implements Renderable, Updateable{
 
-    protected Hitbox hitbox;
     public Creatures(String path) {
         super(path);
 
@@ -18,9 +17,11 @@ public abstract class Creatures extends GameObject implements Renderable, Update
 
     public void moveX(float dx){
         x += dx;
+        hitbox.movex(dx);
     }
     public void moveY(float dy){
         y += dy;
+        hitbox.moveY(dy);
     }
 
     /**

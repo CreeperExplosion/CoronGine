@@ -54,6 +54,19 @@ public class Hitbox {
                 (th <= ty || th >= ay));
     }
 
+    public void move(float dx, float dy){
+        this.posx += dx;
+        this.posy += dy;
+    }
+
+    public void movex(float dx){
+        this.move(dx, 0);
+    }
+
+    public void moveY(float dy) {
+        this.move(0, dy);  
+    }
+
 
     public void setPos(float x, float y){
         this.posx = x;
