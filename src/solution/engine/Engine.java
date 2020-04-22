@@ -2,9 +2,7 @@ package solution.engine;
 
 import solution.engine.logic.GameImplementation;
 import solution.engine.input.Input;
-import solution.engine.states.GameState;
-import solution.engine.states.MenuState;
-import solution.engine.states.State;
+import solution.engine.gameobject.ObjectHandler;
 import solution.engine.graphics.Camera;
 import solution.engine.graphics.Renderer;
 import solution.engine.graphics.Window;
@@ -41,8 +39,9 @@ public class Engine implements Runnable {
 
     // Game stuff
     private Input input;
-    Window gameWindow;
-    GameImplementation gameImplementation;
+    private Window gameWindow;
+    private GameImplementation gameImplementation;
+    private ObjectHandler objectHandler;
     //////////////////
 
     //
@@ -82,8 +81,6 @@ public class Engine implements Runnable {
     //
 
     //
-    private State gameState;
-    private State menuState;
 
     private Renderer renderer;
 
@@ -96,20 +93,14 @@ public class Engine implements Runnable {
 
         renderer = new Renderer(rendererX, rendererY, gameWindow);
 
-        // SET STATE TO GAME STATE
-        gameState = new GameState(gameImplementation);
-        menuState = new MenuState();
-        State.setState(gameState);
-
         input = new Input(gameWindow);
+
+        objectHandler = new ObjectHandler();
     }
 
     public void init() {
         gameWindow.init();
         gameImplementation.init();
-        gameState.init();
-        menuState.init();
-
     };
 
     public void start() {
@@ -171,10 +162,8 @@ public class Engine implements Runnable {
     }
 
     public void update(float deltaTime) {
-        if (State.getState() != null) {
-            State.getState().update(deltaTime);
-        }
-        // gameLogic.update(deltaTime);
+        objectHandler.update(deltaTime);
+        gameImplementation.update(deltaTime);
 
       //  gameWindow.AppendTitle(renderTime);
     }
@@ -186,7 +175,10 @@ public class Engine implements Runnable {
         graphics.setColor(Color.WHITE);
         graphics.clearRect(0, 0, gameWindow.getWidth(), gameWindow.getHeight());
 
-        gameImplementation.render(renderer);
+        
+        objectHandler.render(renderer);
+
+
 
         camera = gameImplementation.getCamera();
 

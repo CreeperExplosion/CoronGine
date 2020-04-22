@@ -31,4 +31,11 @@ public class Timer {
        return System.currentTimeMillis() - startTime;
     }
 
+    public float getTimeinSeconds(){
+        if(!started)
+            return -1;
+        
+        return ((float)(System.currentTimeMillis() - startTime))/1000f;
+    }
+
 }

@@ -13,19 +13,20 @@ public abstract class GameObject {
     protected float y;
     protected float height;
     protected float width;
+    protected float scale;
 
     protected SpriteSheet spriteSheet;
     protected BufferedImage texture;
 
     public GameObject(String spriteSheetPath) {
-        this.init();
         try {
             spriteSheet = new SpriteSheet(ImageLoader.loadImage(spriteSheetPath));
         } catch (IOException e) {
             e.printStackTrace();
         }
-
+        
         texture = spriteSheet.get(0);
+        this.init();
     }
 
     public abstract void init();
@@ -34,6 +35,18 @@ public abstract class GameObject {
 
     public abstract void update(float deltaTime);
 
+    /**
+     * @param scale the scale to set
+     */
+    public void setScale(float scale) {
+        this.scale = scale;
+    }
+    /**
+     * @return the scale
+     */
+    public float getScale() {
+        return scale;
+    }
     /**
      * @return the x
      */

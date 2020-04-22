@@ -3,7 +3,6 @@ package solution.coronagame;
 import solution.engine.gameobject.Creatures;
 import solution.engine.input.Input;
 import solution.engine.input.Keycode;
-import solution.engine.physics.Hitbox;
 import solution.engine.graphics.Renderer;
 
 public class Player extends Creatures {
@@ -27,9 +26,6 @@ public class Player extends Creatures {
 
     @Override
     public void render(Renderer renderer) {
-        float x1 = - (float) renderer.getRenderDimension().getWidth()/2f;
-        float y1 = - (float) renderer.getRenderDimension().getHeight()/2f;
-        //renderer.drawImage(spriteSheet.get(1),  0 ,  0, -1 ,2);
         
 
         renderer.drawImage(texture,x-8, y-8, 0, scale);
@@ -67,18 +63,10 @@ public class Player extends Creatures {
             y -= acceleratedSpeed * deltaTime;
         }
 
-        System.out.println(x + "" + y);
-
         hitbox.setPos(x, y);
 
-<<<<<<< HEAD
-
-    }
-
-=======
     }
 
 
 
->>>>>>> 9b8b2d003d88d4380d1880214f906d7435d52d21
 }
