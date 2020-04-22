@@ -27,9 +27,10 @@ public class Engine implements Runnable {
     private Thread gameThread;
     private boolean running;
     public final static int FPS = 50000;
-    public final static int TPS = 120;
+    public final static int TPS = 60;
     private static String renderTime;
     ///////////////
+
     //
 
     //
@@ -42,7 +43,7 @@ public class Engine implements Runnable {
     private Input input;
     Window gameWindow;
     GameImplementation gameImplementation;
-    //
+    //////////////////
 
     //
 
@@ -53,11 +54,12 @@ public class Engine implements Runnable {
     //
 
     // render and graphics stuff
-    private int rendererY = 216;
-    private int rendererX = rendererY * 16 / 9;
-    private final int WINDOW_HEIGHT = 720;
-    private final int WINDOW_WIDTH = WINDOW_HEIGHT * 16 / 9;
-    //
+    public static final int rendererY = 216;
+    public static final int rendererX = rendererY * 16 / 9;
+    public static final int WINDOW_HEIGHT = 720;
+    public static final int WINDOW_WIDTH = WINDOW_HEIGHT * 16 / 9;
+    public static float SCALE = (float) WINDOW_HEIGHT/rendererY;
+    ////////////////
 
     //
 
@@ -67,6 +69,17 @@ public class Engine implements Runnable {
 
     // camera
     Camera camera;
+    //////
+    
+    //
+
+    //
+
+    //
+
+    //
+
+    //
 
     //
     private State gameState;
@@ -82,6 +95,7 @@ public class Engine implements Runnable {
         gameWindow = new Window(WINDOW_WIDTH, WINDOW_HEIGHT, GAME_NAME);
 
         renderer = new Renderer(rendererX, rendererY, gameWindow);
+
         // SET STATE TO GAME STATE
         gameState = new GameState(gameImplementation);
         menuState = new MenuState();
@@ -152,15 +166,17 @@ public class Engine implements Runnable {
     }
 
     public void input() {
-        input.update();
+        input.update(camera);
+        gameWindow.AppendTitle(Input.mouseX() + ":" + Input.mouseY()+"+-"+ Engine.SCALE);
     }
 
     public void update(float deltaTime) {
         if (State.getState() != null) {
             State.getState().update(deltaTime);
-
         }
         // gameLogic.update(deltaTime);
+
+      //  gameWindow.AppendTitle(renderTime);
     }
 
     public void render() {
@@ -179,7 +195,7 @@ public class Engine implements Runnable {
         renderBuffer.show();
         graphics.dispose();
 
-        gameWindow.AppendTitle(renderTime);
+        
     }
 
     public static String RENDER_TIME() {

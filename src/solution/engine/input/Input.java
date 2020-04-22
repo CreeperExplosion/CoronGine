@@ -1,5 +1,7 @@
 package solution.engine.input;
 
+import solution.engine.Engine;
+import solution.engine.graphics.Camera;
 import solution.engine.graphics.Window;
 
 public class Input {
@@ -7,6 +9,10 @@ public class Input {
     private static KeyboardHandler keyboard;
 
     private static MouseHandler mouse;
+
+
+    private static float mouseCameraX = 0;
+    private static float mouseCameraY = 0;
 
     public Input(Window window) {
 
@@ -18,9 +24,18 @@ public class Input {
         window.addMouseMotionListener(mouse);
     }
 
-    public void update(){
+    public void update(Camera camera){
         keyboard.update();
         mouse.update();
+
+        mouseCameraX  = ( + mouse.mouseX)/ Engine.SCALE;
+        mouseCameraY  = (+ mouse.mouseY)/ Engine.SCALE;
+
+        mouseCameraX -= (float)Engine.rendererX / 2;
+        mouseCameraY -= (float)Engine.rendererY / 2;
+
+        mouseCameraX -= camera.getX();
+        mouseCameraY -= camera.getY();
     }
 
 
@@ -47,12 +62,12 @@ public class Input {
     public static boolean mouseInside(){
         return mouse.mouseInside;
     }
-    public static int mouseX(){
-        return mouse.mouseX;
+    public static float mouseX(){
+        return mouseCameraX;
     }
 
-    public static int mouseY(){
-        return mouse.mouseY;
+    public static float mouseY(){
+        return  mouseCameraY;
     }
 
 

@@ -3,8 +3,6 @@ package solution.engine.graphics;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
-import java.awt.event.ComponentEvent;
-import java.awt.event.ComponentListener;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
@@ -48,36 +46,6 @@ public class Window {
 
         frame.pack();
 
-        // frame.addComponentListener(new ComponentListener() {
-
-        //     public void componentResized(ComponentEvent e) {
-
-        //         int newHeight = e.getComponent().getHeight();
-        //         int newWidth = e.getComponent().getWidth();
-        //         if(height != newHeight){
-
-        //             height = newHeight;
-        //             width = height *16/9;
-        //         }
-
-        //         if(width != newWidth){
-
-        //             width = newWidth;
-        //             height = width *9/16;
-
-        //         }
-
-        //         setWindowSize(width, height);
-
-        //     }
-        //     public void componentMoved(ComponentEvent e) {
-        //     }
-        //     public void componentShown(ComponentEvent e) {
-        //     }
-        //     public void componentHidden(ComponentEvent e) {
-        //     } 
-        // });
-
 
        canvas.setBackground(new Color(255,255,255,255));
     }
@@ -110,7 +78,7 @@ public class Window {
 
 
     public void AppendTitle(String app) {
-        frame.setTitle(title+ "--" +app);
+        frame.setTitle(title+ "   " +app);
     }
     
     /**

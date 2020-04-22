@@ -1,7 +1,7 @@
 package solution.engine.graphics;
 
 import java.awt.*;
-import java.awt.image.BufferedImage;
+import java.awt.image.*;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.awt.geom.AffineTransform;
@@ -41,6 +41,15 @@ public class Renderer {
 
         AffineTransform oldAT = screen2D.getTransform();
 
+        // GRPHICS QUALITY
+        screen2D.setRenderingHint( 
+                RenderingHints.KEY_ANTIALIASING, 
+                RenderingHints.VALUE_ANTIALIAS_ON);
+        screen2D.setRenderingHint(
+                RenderingHints.KEY_RENDERING, 
+                RenderingHints.VALUE_RENDER_QUALITY);
+        screen2D.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION, 
+                RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
 
         // setting world coordinates to screen
         screen2D.translate(window.getWidth()/2, window.getHeight()/2);
@@ -50,35 +59,49 @@ public class Renderer {
         screen2D.translate(camera.getX(), camera.getY());
         screen2D.scale(camera.getZoom(), camera.getZoom());
 
-        screen2D.setRenderingHint( 
-                RenderingHints.KEY_ANTIALIASING, 
-                RenderingHints.VALUE_ANTIALIAS_ON);
-        screen2D.setRenderingHint(
-                RenderingHints.KEY_RENDERING, 
-                RenderingHints.VALUE_RENDER_QUALITY);
-        screen2D.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION, 
-                RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);      
 
+        
+        
+        // drawing each objects
         for (HashSet<RenderObject> zLayer : zLayers) {
+
             for (RenderObject renderObject : zLayer) {
+
                 AffineTransform at = screen2D.getTransform();
                 screen2D.translate(renderObject.posX, renderObject.posY);
+                screen2D.scale(renderObject.scalex, renderObject.scaley);
                 screen2D.drawImage(renderObject.image, 0, 0, null);
-
+                
                 screen2D.setTransform(at);
             }
         }
-        
         
 
         screen2D.setTransform(oldAT);
         cleanup();
     }
 
-    public void drawImage(BufferedImage image, float posX, float posY, int z) {
+    public void drawRec(float x, float y, float width, float height, int z , int color){
+        BufferedImage img = new BufferedImage(1,1,BufferedImage.TYPE_INT_RGB);
+
+        int[] col = ((DataBufferInt) img.getRaster().getDataBuffer()).getData();
+
+        for (int i = 0; i < col.length; i++) {
+            col[i] =  color;
+        }
+
+
+        RenderObject obj = new RenderObject(img, x, y, width, height);
+
+        HashSet<RenderObject> thisLayer = zLayers.get(z);
+        thisLayer.add(obj);
+        zLayers.set(z, thisLayer);
+    }
+
+    public void drawImage(BufferedImage image, float posX, float posY, int z, float scale) {
         z = z + 1;
 
-        RenderObject obj = new RenderObject(image, posX, posY);
+        RenderObject obj = new RenderObject(image, posX, posY, scale, scale);
 
         HashSet<RenderObject> thisLayer = zLayers.get(z);
         thisLayer.add(obj);
@@ -86,8 +109,11 @@ public class Renderer {
 
     }
 
+    public void drawImage(BufferedImage image, float x,float y, int z) {
+        this.drawImage(image,  x, y, z, 1);
+    }
     public void drawImage(BufferedImage image, float x, float y) {
-        this.drawImage(image,  x, y, 0);
+        this.drawImage(image,  x, y, 0, 1);
     }
 
     private void cleanup() {
@@ -113,9 +139,13 @@ public class Renderer {
     class RenderObject {
         float posX;
         float posY;
+        float scalex;
+        float scaley;
         BufferedImage image;
 
-        RenderObject(BufferedImage image, float posX, float posY) {
+        RenderObject(BufferedImage image, float posX, float posY, float scalex, float scaley) {
+            this.scaley = scaley;
+            this.scalex = scalex;
             this.posX = posX;
             this.posY = posY;
 
