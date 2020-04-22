@@ -8,6 +8,9 @@ import solution.engine.graphics.Renderer;
 
 public class Player extends Creatures {
 
+    private float acceleratedSpeed = 40;
+    private float normalSpeed = 30;
+
     public Player() {
         super("/test.png");
     }
@@ -38,37 +41,44 @@ public class Player extends Creatures {
     public void update(float deltaTime) {
 
         if (Input.getKeyDown(Keycode.D)) {
-            x += 30 * deltaTime;
+            x -= normalSpeed * deltaTime;
         }
         if(Input.getKeyHeld(Keycode.D)){
-            x += 40 * deltaTime;
+            x -= acceleratedSpeed * deltaTime;
         }
 
         if (Input.getKeyDown(Keycode.A)) {
-            x -= 30 * deltaTime;
+            x += normalSpeed * deltaTime;
         }
         if(Input.getKeyHeld(Keycode.A)){
-            x -= 40 * deltaTime;
+            x += acceleratedSpeed * deltaTime;
         }
 
-        if(Input.getKeyDown(Keycode.S)){
-            y += 30 * deltaTime;
-        }
         if(Input.getKeyDown(Keycode.W)){
-            y -= 30* deltaTime;
-        }
-        if(Input.getKeyHeld(Keycode.S)){
-            y += 40 * deltaTime;
+            y += normalSpeed* deltaTime;
         }
         if(Input.getKeyHeld(Keycode.W)){
-            y -= 40 * deltaTime;
+            y += acceleratedSpeed * deltaTime;
+        }
+        if(Input.getKeyDown(Keycode.S)){
+            y -= normalSpeed * deltaTime;
+        }
+        if(Input.getKeyHeld(Keycode.S)){
+            y -= acceleratedSpeed * deltaTime;
         }
 
         System.out.println(x + "" + y);
 
         hitbox.setPos(x, y);
 
+<<<<<<< HEAD
 
     }
 
+=======
+    }
+
+
+
+>>>>>>> 9b8b2d003d88d4380d1880214f906d7435d52d21
 }
