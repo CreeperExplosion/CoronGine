@@ -1,7 +1,6 @@
 package solution.coronagame;
 
 import solution.engine.logic.GameImplementation;
-import solution.engine.physics.Hitbox;
 
 import java.awt.Color;
 

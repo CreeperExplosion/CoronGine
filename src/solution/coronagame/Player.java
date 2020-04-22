@@ -3,7 +3,6 @@ package solution.coronagame;
 import solution.engine.gameobject.Creatures;
 import solution.engine.input.Input;
 import solution.engine.input.Keycode;
-import solution.engine.physics.Hitbox;
 import solution.engine.graphics.Renderer;
 
 public class Player extends Creatures {
@@ -69,16 +68,7 @@ public class Player extends Creatures {
 
         System.out.println(x + "" + y);
 
-        hitbox.setPos(x, y);
-
-<<<<<<< HEAD
 
     }
 
-=======
-    }
-
-
-
->>>>>>> 9b8b2d003d88d4380d1880214f906d7435d52d21
 }
