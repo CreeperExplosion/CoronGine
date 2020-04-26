@@ -1,8 +1,10 @@
 package solution.coronagame;
 
 
+import solution.coronagame.Scenes.GameScene;
 import solution.engine.Util.Timer;
 import solution.engine.logic.GameImplementation;
+import solution.engine.logic.Scene;
 
 
 public class CoronaGame extends GameImplementation {
@@ -13,13 +15,11 @@ public class CoronaGame extends GameImplementation {
 
     Timer timer;
 
+    Scene gameScene;
+
     @Override
     public void update(float deltaTime) {
-
-        player.update(deltaTime);
-        camera.setX( - player.getX());
-        camera.setY( - player.getY());
-        
+        gameScene.update(deltaTime);
     }
 
     @Override
@@ -27,8 +27,9 @@ public class CoronaGame extends GameImplementation {
         player = new Player();
         player.startRender();
 
-        enemy = new Enemy();
-        enemy.startRender();
+        gameScene = new GameScene(player);
+        
+        currentScene = gameScene;
     }
 
 }

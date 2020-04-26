@@ -22,6 +22,7 @@ public abstract class GameObject {
         }
         width = 16;
         height = 16;
+        scale = 1;
         texture = spriteSheet.get(0);
         this.init();
     }

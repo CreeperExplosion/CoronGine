@@ -5,7 +5,6 @@ import solution.engine.gameobject.Body;
 import solution.engine.gameobject.Creatures;
 import solution.engine.input.Input;
 import solution.engine.input.Keycode;
-import solution.engine.graphics.Renderer;
 
 public class Player extends Creatures {
 
@@ -26,11 +25,11 @@ public class Player extends Creatures {
     public void init() {
         
         disableCollision();
-        x = 64;
-        y = 64;
+        x = 0;
+        y = 0;
         scale = 1;
 
-        texture = spriteSheet.get(1);
+        texture = spriteSheet.get(0);
 
     }
     

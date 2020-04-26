@@ -25,7 +25,7 @@ public class Engine implements Runnable {
     // Game loops //
     private Thread gameThread;
     private boolean running;
-    public final static int FPS = 50000;
+    public final static int FPS = 120;
     public final static int TPS = 60;
     private static String renderTime;
     ///////////////
@@ -162,7 +162,7 @@ public class Engine implements Runnable {
 
     public void input() {
         input.update(camera);
-       // gameWindow.AppendTitle(Input.mouseX() + ":" + Input.mouseY()+"+-"+ Engine.SCALE);
+       //gameWindow.AppendTitle(Input.mouseX() + "  :  " + Input.mouseY());
     }
 
     public void update(float deltaTime) {
@@ -185,7 +185,7 @@ public class Engine implements Runnable {
 
 
 
-        camera = gameImplementation.getCamera();
+        camera = gameImplementation.getCurrentScene().getCamera();
 
         renderer.setCamera(camera);
         renderer.render(graphics, gameWindow);
