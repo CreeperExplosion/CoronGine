@@ -3,17 +3,17 @@ package solution.engine.physics;
 
 public class Hitbox {
 
-    private float posx;
-    private float posy;
+    private float x;
+    private float y;
 
     private float width;
     private float height;
 
 
 
-    public Hitbox(float posx, float posy, float width, float height) {
-        this.posx = posx;
-        this.posy = posy;
+    public Hitbox(float x, float y, float width, float height) {
+        this.x = x;
+        this.y = y;
         this.width = width;
         this.height = height;
     }
@@ -24,39 +24,28 @@ public class Hitbox {
         height *= scale;
     }
 
-    public boolean intersects(Hitbox arg){
+    boolean intersects(Hitbox hitbox){
+        
+        float totW = (hitbox.width + width) * 0.5f;
+        float totH = (hitbox.height + height) * 0.5f;
 
+        
+        float tx = x;
+        float ty = y;
 
-        float ax = arg.getPosx();
-        float ay = arg.getPosy();
+        float hx = hitbox.x;
+        float hy = hitbox.y;
 
-        float aw = arg.getWidth();
-        float ah = arg.getHeight();
+        float dy = Math.abs(ty - hy);
+        float dx = Math.abs(tx - hx);
 
-        float tx = this.posx;
-        float ty = this.posy;
-
-        float tw = this.width;
-        float th = this.height; 
-
-        if (aw <= 0 || ah <= 0 || tw <= 0 || th <= 0) {
-            return false;
-        }
-
-        aw += ax;
-        ah += ay;
-        tw += tx;
-        th += ty;
-        //      overflow || intersect
-        return ((aw <= ax || aw >= tx) &&
-                (ah <= ay || ah >= ty) &&
-                (tw <= tx || tw >= ax) &&
-                (th <= ty || th >= ay));
+        return (dx < totW) && (dy < totH);
     }
 
+
     public void move(float dx, float dy){
-        this.posx += dx;
-        this.posy += dy;
+        this.x += dx;
+        this.y += dy;
     }
 
     public void movex(float dx){
@@ -69,24 +58,24 @@ public class Hitbox {
 
 
     public void setPos(float x, float y){
-        this.posx = x;
-        this.posy = y;
+        this.x = x;
+        this.y = y;
     }
 
-    public float getPosx() {
-        return this.posx;
+    public float getX() {
+        return this.x;
     }
 
-    public void setPosx(float posx) {
-        this.posx = posx;
+    public void setX(float x) {
+        this.x = x;
     }
 
-    public float getPosy() {
-        return this.posy;
+    public float getY() {
+        return this.y;
     }
 
-    public void setPosy(float posy) {
-        this.posy = posy;
+    public void setY(float y) {
+        this.y = y;
     }
 
     public float getWidth() {

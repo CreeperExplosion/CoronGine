@@ -82,6 +82,7 @@ public class Renderer {
     }
 
     public void drawRec(float x, float y, float width, float height, int z , int color){
+        z = z + 1;
         BufferedImage img = new BufferedImage(1,1,BufferedImage.TYPE_INT_RGB);
 
         int[] col = ((DataBufferInt) img.getRaster().getDataBuffer()).getData();

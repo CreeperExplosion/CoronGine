@@ -2,6 +2,7 @@ package solution.engine.gameobject;
 
 import java.util.LinkedHashSet;
 
+import solution.engine.Math.Vector2f;
 import solution.engine.physics.Hitbox;
 
 public abstract class CollisionObject extends GameObject {
@@ -11,31 +12,36 @@ public abstract class CollisionObject extends GameObject {
 
     private boolean collisionEnabled = true;
 
-    protected Hitbox hitbox;
-
-    public CollisionObject(String spriteSheetPath) {
-        super(spriteSheetPath);
-        hitbox = new Hitbox(x,y,width,height);
+    {
         enableCollision();
     }
 
-    public abstract void collide(CollisionObject obj);
+    public CollisionObject(String spriteSheetPath) {
+        super(spriteSheetPath);
+    }
+
+
+    public abstract void collide(CollisionObject obj, Vector2f direction);
+
 
     public void enableCollision(){
-        collisionEnabled = false;
+        collisionEnabled = true;
         collisionObjects.add(this);
     }
 
     public void disableCollision() {
-        collisionEnabled = true;
-        collisionObjects.add(this);
+        collisionEnabled = false;
+        collisionObjects.remove(this);
     }
 
     /**
      * @return the hitbox
      */
     public Hitbox getHitbox() {
-        return hitbox;
+        if (!collisionEnabled) 
+            return null;
+
+        return new Hitbox(x + (0.5f * width), y + (0.5f * height), width, height);
     }
 
     /**

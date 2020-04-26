@@ -24,17 +24,13 @@ public abstract class GameObject {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        
+        width = 16;
+        height = 16;
         texture = spriteSheet.get(0);
         this.init();
     }
 
     public abstract void init();
-
-    public abstract void render(Renderer renderer);
-
-    public abstract void update(float deltaTime);
-
     /**
      * @param scale the scale to set
      */

@@ -69,7 +69,7 @@ public class Engine implements Runnable {
     //
 
     // camera
-    Camera camera;
+    private Camera camera;
     //////
     
     //
@@ -162,7 +162,7 @@ public class Engine implements Runnable {
 
     public void input() {
         input.update(camera);
-        gameWindow.AppendTitle(Input.mouseX() + ":" + Input.mouseY()+"+-"+ Engine.SCALE);
+       // gameWindow.AppendTitle(Input.mouseX() + ":" + Input.mouseY()+"+-"+ Engine.SCALE);
     }
 
     public void update(float deltaTime) {
@@ -170,7 +170,7 @@ public class Engine implements Runnable {
         gameImplementation.update(deltaTime);
         collisionHandler.update();
 
-      //  gameWindow.AppendTitle(renderTime);
+        gameWindow.AppendTitle(renderTime);
     }
 
     public void render() {
