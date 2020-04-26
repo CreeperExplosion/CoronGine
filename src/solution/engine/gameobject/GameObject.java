@@ -4,16 +4,12 @@ import java.awt.image.*;
 import java.io.IOException;
 
 import solution.engine.graphics.ImageLoader;
-import solution.engine.graphics.Renderer;
 import solution.engine.graphics.SpriteSheet;
 
 public abstract class GameObject {
 
-    protected float x;
-    protected float y;
-    protected float height;
-    protected float width;
-    protected float scale;
+
+    protected float x, y, width, height, scale;
 
     protected SpriteSheet spriteSheet;
     protected BufferedImage texture;
@@ -31,6 +27,8 @@ public abstract class GameObject {
     }
 
     public abstract void init();
+
+    public abstract void update(float deltaTime);
     /**
      * @param scale the scale to set
      */

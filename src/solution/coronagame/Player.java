@@ -1,7 +1,7 @@
 package solution.coronagame;
 
 import solution.engine.Math.Vector2f;
-import solution.engine.gameobject.CollisionObject;
+import solution.engine.gameobject.Body;
 import solution.engine.gameobject.Creatures;
 import solution.engine.input.Input;
 import solution.engine.input.Keycode;
@@ -30,20 +30,8 @@ public class Player extends Creatures {
         y = 64;
         scale = 1;
 
-        Vector2f v = new Vector2f(0, 1);
-
-
-        System.out.println(Math.toDegrees(v.angleRad(new Vector2f(0, -1))));
-
         texture = spriteSheet.get(1);
 
-    }
-    
-    @Override
-    public void render(final Renderer renderer) {
-        
-        renderer.drawImage(texture, x, y, 0, scale);
-        
     }
     
     @Override
@@ -79,7 +67,7 @@ public class Player extends Creatures {
     }
 
     @Override
-    public void collide(CollisionObject obj, Vector2f direction) {
+    public void collide(Body obj, Vector2f direction) {
         
     }
 

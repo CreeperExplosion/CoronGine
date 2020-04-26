@@ -1,21 +1,20 @@
 package solution.engine.physics;
 
-import java.util.Vector;
-
 import solution.engine.Math.Vector2f;
-import solution.engine.gameobject.CollisionObject;
+import solution.engine.gameobject.Body;
 
 public class CollisionHandler {
 
     public CollisionHandler() {
-        super();
     }
 
     public void update() {
-        for (CollisionObject obj1 : CollisionObject.collisionObjects) {
+        for (Body obj1 : Body.BODIES) {
+            
             if (obj1.getHitbox() == null)
                 continue;
-            for (CollisionObject obj2 : CollisionObject.collisionObjects) {
+
+            for (Body obj2 : Body.BODIES) {
                 if (obj2.getHitbox() == null)
                     continue;
 

@@ -15,20 +15,20 @@ public class CoronaGame extends GameImplementation {
 
     @Override
     public void update(float deltaTime) {
+
+        player.update(deltaTime);
         camera.setX( - player.getX());
         camera.setY( - player.getY());
-
+        
     }
 
     @Override
     public void init() {
         player = new Player();
         player.startRender();
-        player.startUpdate();
 
         enemy = new Enemy();
         enemy.startRender();
-        enemy.startUpdate();
     }
 
 }

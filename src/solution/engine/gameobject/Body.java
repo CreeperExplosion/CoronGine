@@ -3,12 +3,15 @@ package solution.engine.gameobject;
 import java.util.LinkedHashSet;
 
 import solution.engine.Math.Vector2f;
+import solution.engine.gameobject.properties.Renderable;
+import solution.engine.graphics.Renderer;
 import solution.engine.physics.Hitbox;
 
-public abstract class CollisionObject extends GameObject {
+public abstract class Body extends GameObject implements Renderable{
 
+    protected int z;
 
-    public static LinkedHashSet<CollisionObject> collisionObjects = new LinkedHashSet<CollisionObject>();
+    public static LinkedHashSet<Body> BODIES = new LinkedHashSet<Body>();
 
     private boolean collisionEnabled = true;
 
@@ -16,22 +19,27 @@ public abstract class CollisionObject extends GameObject {
         enableCollision();
     }
 
-    public CollisionObject(String spriteSheetPath) {
+    public Body(String spriteSheetPath) {
         super(spriteSheetPath);
+
+        z = 0;
     }
 
+    public void render(Renderer renderer){
+        renderer.drawImage(texture, x, y, z, scale);
+    }
 
-    public abstract void collide(CollisionObject obj, Vector2f direction);
+    public abstract void collide(Body obj, Vector2f direction);
 
 
     public void enableCollision(){
         collisionEnabled = true;
-        collisionObjects.add(this);
+        BODIES.add(this);
     }
 
     public void disableCollision() {
         collisionEnabled = false;
-        collisionObjects.remove(this);
+        BODIES.remove(this);
     }
 
     /**
