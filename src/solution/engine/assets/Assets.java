@@ -9,7 +9,7 @@ import java.io.IOException;
 public class Assets {
     public static SpriteSheet spriteSheet;
 
-    {
+    static {
         try {
             spriteSheet = new SpriteSheet(ImageLoader.loadImage("/test.png"));
         } catch (IOException e) {

@@ -2,42 +2,36 @@ package solution.coronagame;
 
 import solution.engine.logic.GameImplementation;
 
-import java.awt.Color;
 
-import solution.engine.graphics.Renderer;
-import solution.engine.input.Input;
+import solution.coronagame.Scenes.GameScene;
+import solution.engine.Util.Timer;
+import solution.engine.logic.GameImplementation;
+import solution.engine.logic.Scene;
 
-public class CoronaGame implements GameImplementation {
+
+public class CoronaGame extends GameImplementation {
 
     Player player;
-    float cameraZoom;
-    int flipper = 1;
-    @Override
-    public void render(Renderer renderer) {
-       player.render(renderer);
 
-       //renderer.drawRec(Input.mouseX(), Input.mouseY(), 32, 32, 0, Color.RED.getRGB());
+    Enemy enemy;
 
-       //System.out.println(Input.mouseX());
+    Timer timer;
 
-       
-       
-    }
+    Scene gameScene;
 
     @Override
     public void update(float deltaTime) {
-        player.update(deltaTime);
-        camera.setX( - player.getX());
-        camera.setY( - player.getY());
-
-        
-    //     boolean yes = player.getHitbox().intersects(new Hitbox(Input.mouseX(), Input.mouseY(), 3, 3));
-    //    System.out.println(yes);
+        gameScene.update(deltaTime);
     }
 
     @Override
     public void init() {
         player = new Player();
+        player.startRender();
+
+        gameScene = new GameScene(player);
+        
+        currentScene = gameScene;
     }
 
 }

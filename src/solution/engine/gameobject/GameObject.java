@@ -4,37 +4,45 @@ import java.awt.image.*;
 import java.io.IOException;
 
 import solution.engine.graphics.ImageLoader;
-import solution.engine.graphics.Renderer;
 import solution.engine.graphics.SpriteSheet;
 
 public abstract class GameObject {
 
-    protected float x;
-    protected float y;
-    protected float height;
-    protected float width;
-    protected float scale;
+
+    protected float x, y, width, height, scale;
+
 
     protected SpriteSheet spriteSheet;
     protected BufferedImage texture;
 
     public GameObject(String spriteSheetPath) {
-        this.init();
         try {
             spriteSheet = new SpriteSheet(ImageLoader.loadImage(spriteSheetPath));
         } catch (IOException e) {
             e.printStackTrace();
         }
-
+        width = 16;
+        height = 16;
+        scale = 1;
         texture = spriteSheet.get(0);
+        this.init();
     }
 
     public abstract void init();
 
-    public abstract void render(Renderer renderer);
-
     public abstract void update(float deltaTime);
-
+    /**
+     * @param scale the scale to set
+     */
+    public void setScale(float scale) {
+        this.scale = scale;
+    }
+    /**
+     * @return the scale
+     */
+    public float getScale() {
+        return scale;
+    }
     /**
      * @return the x
      */

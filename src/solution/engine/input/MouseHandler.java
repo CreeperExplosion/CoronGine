@@ -3,8 +3,6 @@ package solution.engine.input;
 
 import java.awt.event.*;
 
-import solution.engine.Engine;
-
 
 /**
  * MouseHandler
