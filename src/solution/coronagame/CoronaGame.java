@@ -1,5 +1,7 @@
 package solution.coronagame;
 
+import solution.engine.logic.GameImplementation;
+
 
 import solution.coronagame.Scenes.GameScene;
 import solution.engine.Util.Timer;

@@ -11,6 +11,7 @@ public abstract class GameObject {
 
     protected float x, y, width, height, scale;
 
+
     protected SpriteSheet spriteSheet;
     protected BufferedImage texture;
 
