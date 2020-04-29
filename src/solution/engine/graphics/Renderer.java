@@ -46,7 +46,8 @@ public class Renderer {
      * <li> set image Quality
      * <li> scale from render space to screen space
      * <li> tanslate and scale according to camera
-     * <li> render every objects that are not culled
+     * <li> render every object that is not culled
+     * <li> render every light that is not culled
      * </ol>
      * <br>
      * 
@@ -97,29 +98,33 @@ public class Renderer {
                 screen2D.setTransform(at);
             }
         }
-
         screen2D.setTransform(oldAT);
-        // render light here
-        LightSource l  = new LightSource(1);
-        l.y = 20;
-        l.x = 10;
-        l.scale= 20;
-
-        LightSource l2 = new LightSource(1);
-        l2.x = 0;
-        l2.y = 0;
-        l2.scale = 3;
-        lightSources.add(l2);
-       lightSources.add(l);
-
 
         screen2D.scale(xScale, yScale);
-        worldLight.renderLight(camera, lightSources);
-        worldLight.setLightlevel(240);
         worldLight.render(screen2D);
 
         cleanup();
     }
+
+    public void renderLight(){
+         // render light here
+         worldLight.reset();
+         LightSource l  = new LightSource(1);
+         l.y = 20;
+         l.x = 10;
+         l.scale= 20;
+ 
+         LightSource l2 = new LightSource(1);
+         l2.x = 0;
+         l2.y = 0;
+         l2.scale = 3;
+         lightSources.add(l2);
+         lightSources.add(l);
+
+         worldLight.setLightlevel(240);
+         worldLight.renderLight(camera, lightSources);
+    }
+
 
     /**
      * create a rectangular image and add that to renderobjet to render later
@@ -218,7 +223,6 @@ public class Renderer {
         }
 
         lightSources = new ArrayList<LightSource>();
-        worldLight.reset();
     }
 
     public void setCamera(Camera camera) {

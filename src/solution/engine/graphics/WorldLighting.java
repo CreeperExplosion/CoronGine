@@ -46,7 +46,7 @@ public class WorldLighting {
 
         lightGraphics.translate(((float)width) /2, ((float)height)/2 );;
         lightGraphics.scale(cam.getZoom(), cam.getZoom());
-        lightGraphics.translate(-cam.getX(), -cam.getY());
+        lightGraphics.translate(-cam.getX(),-cam.getY());
 
        
 
