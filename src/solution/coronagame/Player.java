@@ -5,7 +5,6 @@ import solution.engine.gameobject.Body;
 import solution.engine.gameobject.Creatures;
 import solution.engine.input.Input;
 import solution.engine.input.Keycode;
-import solution.engine.graphics.Renderer;
 
 public class Player extends Creatures {
 
@@ -75,4 +74,3 @@ public class Player extends Creatures {
 
 
     }
-}
