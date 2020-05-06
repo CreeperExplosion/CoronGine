@@ -8,54 +8,84 @@ import java.awt.geom.AffineTransform;
 
 public class Renderer {
 
+
     public static final int Z_LAYERS_NUMBER = 3;
-    ArrayList<HashSet<RenderObject>> zLayers;
     float yScale;
     float xScale;
-    Dimension renderDimension;
+    float rendererHeight, rendererWidth;
 
     Camera camera;
+    ArrayList<HashSet<RenderObject>> zLayers;
+    WorldLighting worldLight;
+
+    ArrayList<LightSource> lightSources;
 
     public Renderer(int rendererSizeX, int rendererSizeY, Window window) {
 
+        // setup the scale of the window
         xScale = window.getWidth() / rendererSizeX;
         yScale = window.getHeight() / rendererSizeY;
-
-        renderDimension = new Dimension(rendererSizeX, rendererSizeY);
+        rendererWidth = rendererSizeX;
+        rendererHeight = rendererSizeY;
 
         zLayers = new ArrayList<HashSet<RenderObject>>(3);
-
         for (int i = 0; i < Z_LAYERS_NUMBER; i++) {
             zLayers.add(new HashSet<RenderObject>());
         }
         camera = new Camera(1, 0, 0);
+        lightSources = new ArrayList<LightSource>();
+        worldLight = new WorldLighting(rendererSizeX, rendererSizeY);
+
     }
 
+    /**
+     * render every render objects that were added
+     * 
+     * render steps:
+     * <ol>
+     * <li> set image Quality
+     * <li> scale from render space to screen space
+     * <li> tanslate and scale according to camera
+     * <li> render every object that is not culled
+     * <li> render every light that is not culled
+     * </ol>
+     * <br>
+     * 
+     * @param screen
+     * @param window
+     */
     public void render(Graphics screen, Window window) {
-
         Graphics2D screen2D = (Graphics2D) screen;
-
-        xScale = (float) (window.getWidth() / renderDimension.getWidth());
-        yScale = (float) (window.getHeight() / renderDimension.getHeight());
-
         AffineTransform oldAT = screen2D.getTransform();
 
+        //
         // GRPHICS QUALITY
+        //
         screen2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         screen2D.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
         screen2D.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION,
                 RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
 
-        // setting world coordinates to screen
-        // screen2D.translate(window.getWidth() / 2, window.getHeight() / 2);
+        //
+        // setup the scales
+        //
+        xScale = (float) (window.getWidth() / rendererWidth);
+        yScale = (float) (window.getHeight() / rendererHeight);
+
+        //
+        // setting render size to screen screen size
+        //
         screen2D.scale(xScale, yScale);
-        screen2D.translate(renderDimension.getWidth() / 2, renderDimension.getHeight() / 2);
+        screen2D.translate(rendererWidth / 2, rendererHeight / 2);
 
+        //
         // camera transformation
+        //
         screen2D.scale(camera.getZoom(), camera.getZoom());
-        screen2D.translate(camera.getX(), camera.getY());
-
+        screen2D.translate( -camera.getX(), -camera.getY());
+        //
         // drawing each objects
+        //
         for (HashSet<RenderObject> zLayer : zLayers) {
 
             for (RenderObject renderObject : zLayer) {
@@ -68,22 +98,50 @@ public class Renderer {
                 
             }
         }
-
         screen2D.setTransform(oldAT);
+
+        screen2D.scale(xScale, yScale);
+        worldLight.render(screen2D);
+
         cleanup();
     }
 
-    public void drawRec(float x, float y, float width, float height, int z, int color) {
+    public void renderLight(){
+         // render light here
+         worldLight.reset();
+         LightSource l  = new LightSource(1);
+         l.y = 20;
+         l.x = 10;
+         l.scale= 20;
+ 
+         LightSource l2 = new LightSource(1);
+         l2.x = 0;
+         l2.y = 0;
+         l2.scale = 3;
+         lightSources.add(l2);
+         lightSources.add(l);
 
+         worldLight.setLightlevel(240);
+         worldLight.renderLight(camera, lightSources);
+    }
+
+
+    /**
+     * create a rectangular image and add that to renderobjet to render later
+     * @param x      x position of top left corner
+     * @param y      y position of top left corner
+     * @param width
+     * @param height
+     * @param z      z layer
+     * @param color  color in hex
+     */
+    public void drawRec(float x, float y, float width, float height, int z, int color) {
         z = z + 1;
         BufferedImage img = new BufferedImage(1, 1, BufferedImage.TYPE_INT_RGB);
-
         int[] col = ((DataBufferInt) img.getRaster().getDataBuffer()).getData();
-
         for (int i = 0; i < col.length; i++) {
             col[i] = color;
         }
-
         RenderObject obj = new RenderObject(img, x, y, width, height);
 
         HashSet<RenderObject> thisLayer = zLayers.get(z);
@@ -91,33 +149,24 @@ public class Renderer {
         zLayers.set(z, thisLayer);
     }
 
+    /**
+     * add image to renderobjects to render later
+     * @param image
+     * @param posX  top left corner
+     * @param posY  top left corner
+     * @param z
+     * @param scale
+     */
     public void drawImage(BufferedImage image, float posX, float posY, int z, float scale) {
+        if (shouldCull(posX, posY, scale * 16f)){
+            return;
+        }
+
         z = z + 1;
-
-        float allowance = 16 * scale;
-
-        float x = -camera.getX();
-        float y = -camera.getY();
-        float zoom = camera.getZoom();
-
-        float edgeL = (x - (float) renderDimension.getWidth() / (2f * zoom)) - allowance;
-        float edgeR = (x + (float) renderDimension.getWidth() / (2f * zoom));
-
-        float edgeU = (y - (float) renderDimension.getHeight() / (2f * zoom)) - allowance;
-        float edgeD = (y + (float) renderDimension.getHeight() / (2f * zoom));
-
-        if (posX < edgeL || (posX) > edgeR)
-            return;
-
-        if (posY < edgeU || posY > edgeD)
-            return;
 
         RenderObject obj = new RenderObject(image, posX, posY, scale, scale);
 
-        HashSet<RenderObject> thisLayer = zLayers.get(z);
-        thisLayer.add(obj);
-        zLayers.set(z, thisLayer);
-
+        zLayers.get(z).add(obj);
     }
 
     public void drawImage(BufferedImage image, float x, float y, int z) {
@@ -128,23 +177,56 @@ public class Renderer {
         this.drawImage(image, x, y, 0, 1);
     }
 
+    /**
+     * @param lightSource
+     * @param posX
+     * @param posY
+     */
+    public void drawLight(LightSource lightSource, float posX, float posY) {
+        if (shouldCull(posX, posY, lightSource.scale * 16))
+            return;
+
+        lightSources.add(lightSource);
+    }
+
+    /**
+     * determine if the object trying to be drawn is outside the screen
+     * 
+     * @param posX
+     * @param posY
+     * @param offset how far off the screen before it gets culled
+     * @return whether to cull or not
+     */
+    private boolean shouldCull(float posX, float posY, float offset) {
+
+        float x = camera.getX();
+        float y = camera.getY();
+        float zoom = camera.getZoom();
+
+        float edgeL = (x - (float) rendererWidth / (2f * zoom)) - offset;
+        float edgeR = (x + (float) rendererWidth / (2f * zoom));
+
+        float edgeU = (y - (float) rendererHeight / (2f * zoom)) - offset;
+        float edgeD = (y + (float) rendererHeight / (2f * zoom));
+
+        return (posY < edgeU || posY > edgeD) || (posX < edgeL || (posX) > edgeR);
+    }
+
+    /**
+     * revert everything for each frame;
+     */
     private void cleanup() {
         zLayers = new ArrayList<HashSet<RenderObject>>(Z_LAYERS_NUMBER);
 
         for (int i = 0; i < Z_LAYERS_NUMBER; i++) {
             zLayers.add(new HashSet<RenderObject>());
         }
+
+        lightSources = new ArrayList<LightSource>();
     }
 
     public void setCamera(Camera camera) {
         this.camera = camera;
-    }
-
-    /**
-     * @return the renderDimension
-     */
-    public Dimension getRenderDimension() {
-        return renderDimension;
     }
 
     class RenderObject {

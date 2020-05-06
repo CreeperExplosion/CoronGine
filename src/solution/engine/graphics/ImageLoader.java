@@ -6,12 +6,14 @@ import java.io.IOException;
 
 public class ImageLoader {
     public static BufferedImage loadImage(String path) throws IOException {
+
+        BufferedImage img;
         try {
-            return ImageIO.read(ImageLoader.class.getResource(path));
-        } catch (Exception e){
-            e.printStackTrace();
-            System.exit(1);
+             img = ImageIO.read(ImageLoader.class.getResource(path));
+        } catch (IOException e){
+            throw new IOException(path + " could not be found");
         }
-        return null;
+
+        return img;
     }
 }

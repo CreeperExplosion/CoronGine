@@ -10,7 +10,6 @@ public abstract class Creatures extends Body {
         x += dx;
     }
 
-
     public void moveY(float dy) {
         y += dy;
     }

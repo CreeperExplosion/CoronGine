@@ -41,8 +41,8 @@ public class GameScene implements Scene {
     public void update(float deltaTime) {
         player.update(deltaTime);
 
-        camera.setX( - player.getX());
-        camera.setY( - player.getY());
+        camera.setX( player.getX());
+        camera.setY( player.getY());
         for (Tile tile : world) {
             tile.update(deltaTime);
         }

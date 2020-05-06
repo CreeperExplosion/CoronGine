@@ -26,6 +26,7 @@ public class Engine implements Runnable {
     private Thread gameThread;
     private boolean running;
     public final static int FPS = 5000;
+    public final static int LUPS = 60;
     public final static int TPS = 60;
     private static String renderTime;
     ///////////////
@@ -124,8 +125,9 @@ public class Engine implements Runnable {
         long initialTime = System.nanoTime();
         final double timePerTick = 1000000000 / TPS;
         final double timePerFrame = 1000000000 / FPS;
-        double deltaU = 0, deltaF = 0;
-        int frames = 0, ticks = 0;
+        final double timePerLightUpate = 1000000000/LUPS;
+        double deltaU = 0, deltaF = 0, deltaL = 0;
+        int frames = 0, ticks = 0, lightUpdates = 0 ;
         long timer = System.currentTimeMillis();
 
         while (running) {
@@ -133,6 +135,7 @@ public class Engine implements Runnable {
             long currentTime = System.nanoTime();
             deltaU += (currentTime - initialTime) / timePerTick;
             deltaF += (currentTime - initialTime) / timePerFrame;
+            deltaL += (currentTime - initialTime) / timePerLightUpate;
             initialTime = currentTime;
 
             if (deltaU >= 1) {
@@ -147,13 +150,19 @@ public class Engine implements Runnable {
                 frames++;
                 deltaF--;
             }
+            if(deltaL >=1){
+                updateLight();
+                lightUpdates++;
+                deltaL--;
+            }
 
             if (System.currentTimeMillis() - timer > 1000) {
 
-                renderTime = String.format("TPS: %s, FPS: %s", ticks, frames);
+                renderTime = String.format("TPS: %s, FPS: %s, LUPS: %s", ticks, frames, lightUpdates);
 
                 frames = 0;
                 ticks = 0;
+                lightUpdates = 0;
                 timer += 1000;
             }
         }
@@ -173,26 +182,33 @@ public class Engine implements Runnable {
         gameWindow.AppendTitle(renderTime);
     }
 
+    int renderCounter = 0;
+
     public void render() {
+        
+        renderCounter ++;
 
         BufferStrategy renderBuffer = gameWindow.getBufferStrategy();
         Graphics2D graphics = (Graphics2D) renderBuffer.getDrawGraphics();
         graphics.setColor(Color.WHITE);
         graphics.clearRect(0, 0, gameWindow.getWidth(), gameWindow.getHeight());
 
-        
+
         objectHandler.render(renderer);
-
-
-
         camera = gameImplementation.getCurrentScene().getCamera();
+
 
         renderer.setCamera(camera);
         renderer.render(graphics, gameWindow);
+
         renderBuffer.show();
         graphics.dispose();
 
         
+    }
+
+    public void updateLight(){
+        renderer.renderLight();
     }
 
     public static String RENDER_TIME() {
