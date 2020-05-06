@@ -10,6 +10,7 @@ public abstract class GameImplementation {
     public abstract void update(float deltaTime);
 
     protected void setScene(Scene scene){
+        scene.init();
         currentScene = scene;
     }
 

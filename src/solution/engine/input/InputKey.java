@@ -14,12 +14,12 @@ public class InputKey {
     Timer releaseTimer;
 
 
-    public InputKey() {
+    InputKey() {
         pressTimer = new Timer();
         releaseTimer = new Timer();
     }
 
-    public void press() {
+    void press() {
         pressTimer.start();
         releaseTimer.stop();
         if(pressTimer.getTime()<0)
@@ -39,7 +39,7 @@ public class InputKey {
         
     }
 
-    public void release() {
+    void release() {
         releaseTimer.start();
         pressTimer.stop();
 
@@ -61,17 +61,17 @@ public class InputKey {
     /**
      * @return the pressed
      */
-    public boolean isPressed() {
+    boolean isPressed() {
         return pressed && !previouslyPressed;
     }
     /**
      * @return the released
      */
-    public boolean isReleased() {
+    boolean isReleased() {
         return !pressed && previouslyPressed;
     }
 
-    public boolean isHeld(){
+    boolean isHeld(){
         return pressed && previouslyPressed;
     }
 

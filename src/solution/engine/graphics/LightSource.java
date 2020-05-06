@@ -3,7 +3,6 @@ package solution.engine.graphics;
 import java.awt.image.*;
 import java.io.IOException;
 import java.awt.*;
-import java.awt.geom.*;
 
 public class LightSource {
 

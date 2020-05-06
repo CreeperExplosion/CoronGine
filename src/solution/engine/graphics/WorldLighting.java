@@ -12,8 +12,6 @@ import java.awt.geom.*;
 
 public class WorldLighting {
 
-    private int color = 0x00000000;
-
     private int light;
 
 
@@ -92,11 +90,5 @@ public class WorldLighting {
         light = lightlevel;
     }
 
-    /**
-     * @param color the color to set
-     */
-    public void setColor(int color) {
-        this.color = color;
-    }
 
 }   

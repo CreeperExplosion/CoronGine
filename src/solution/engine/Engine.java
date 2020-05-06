@@ -1,9 +1,7 @@
 package solution.engine;
 
 import solution.engine.logic.GameImplementation;
-import solution.engine.physics.CollisionHandler;
 import solution.engine.input.Input;
-import solution.engine.gameobject.ObjectHandler;
 import solution.engine.graphics.Camera;
 import solution.engine.graphics.Renderer;
 import solution.engine.graphics.Window;
@@ -43,8 +41,6 @@ public class Engine implements Runnable {
     private Input input;
     private Window gameWindow;
     private GameImplementation gameImplementation;
-    private ObjectHandler objectHandler;
-    private CollisionHandler collisionHandler;
     //////////////////
 
     //
@@ -98,9 +94,6 @@ public class Engine implements Runnable {
 
         input = new Input(gameWindow);
 
-        objectHandler = new ObjectHandler();
-
-        collisionHandler = new CollisionHandler();
     }
 
     public void init() {
@@ -175,36 +168,27 @@ public class Engine implements Runnable {
     }
 
     public void update(float deltaTime) {
-        objectHandler.update(deltaTime);
         gameImplementation.update(deltaTime);
-        collisionHandler.update();
 
         gameWindow.AppendTitle(renderTime);
     }
 
-    int renderCounter = 0;
-
     public void render() {
-        
-        renderCounter ++;
-
         BufferStrategy renderBuffer = gameWindow.getBufferStrategy();
         Graphics2D graphics = (Graphics2D) renderBuffer.getDrawGraphics();
         graphics.setColor(Color.WHITE);
         graphics.clearRect(0, 0, gameWindow.getWidth(), gameWindow.getHeight());
 
-
-        objectHandler.render(renderer);
-        camera = gameImplementation.getCurrentScene().getCamera();
+        
 
 
+
+        camera = gameImplementation.getCurrentScene().camera;
         renderer.setCamera(camera);
         renderer.render(graphics, gameWindow);
 
         renderBuffer.show();
         graphics.dispose();
-
-        
     }
 
     public void updateLight(){

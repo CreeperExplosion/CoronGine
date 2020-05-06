@@ -29,7 +29,7 @@ public class Input {
         mouse.update();
 
         mouseCameraX  = ( + mouse.mouseX)/ Engine.SCALE;
-        mouseCameraY  = (+ mouse.mouseY)/ Engine.SCALE;
+        mouseCameraY  = ( +mouse.mouseY)/ Engine.SCALE;
 
         mouseCameraX -= (float)Engine.rendererX / 2;
         mouseCameraY -= (float)Engine.rendererY / 2;

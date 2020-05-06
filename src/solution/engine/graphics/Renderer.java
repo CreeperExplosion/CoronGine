@@ -54,8 +54,7 @@ public class Renderer {
      * @param screen
      * @param window
      */
-    public void render(Graphics screen, Window window) {
-        Graphics2D screen2D = (Graphics2D) screen;
+    public void render(Graphics2D screen2D, Window window) {
         AffineTransform oldAT = screen2D.getTransform();
 
         //

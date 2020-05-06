@@ -1,14 +1,31 @@
 package solution.engine.logic;
 
+import java.util.ArrayList;
+
+import solution.engine.gameobject.GameObject;
 import solution.engine.graphics.Camera;
 
-public interface Scene {
-    
-    Camera camera  = new Camera(1, 0, 0); 
+public abstract class Scene {
 
-    public abstract void update(float deltaTime);
+    public Camera camera = new Camera();
+
+    protected ArrayList<GameObject> gameObjects = new ArrayList<>();
+
+    boolean running = false;
     
-    public default Camera getCamera(){
-        return camera;
+    public void init() {
+        
     }
+    
+    public void start(){
+
+    }
+
+    public void addGameObject(GameObject obj){
+        gameObjects.add(obj);
+
+        if(!running)
+            return;
+    }
+    
 }
