@@ -75,4 +75,3 @@ public class Player extends Creatures {
 
 
     }
-}

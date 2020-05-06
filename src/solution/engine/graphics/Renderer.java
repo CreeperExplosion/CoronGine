@@ -64,8 +64,8 @@ public class Renderer {
                 screen2D.translate(renderObject.posX, renderObject.posY);
                 screen2D.scale(renderObject.scalex, renderObject.scaley);
                 screen2D.drawImage(renderObject.image, 0, 0, null);
-
                 screen2D.setTransform(at);
+                
             }
         }
 

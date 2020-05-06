@@ -25,7 +25,7 @@ public class Engine implements Runnable {
     // Game loops //
     private Thread gameThread;
     private boolean running;
-    public final static int FPS = 120;
+    public final static int FPS = 5000;
     public final static int TPS = 60;
     private static String renderTime;
     ///////////////
