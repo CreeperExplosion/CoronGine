@@ -1,22 +1,22 @@
 package solution.coronagame;
 
-import solution.engine.logic.GameImplementation;
+import solution.engine.logic.SceneManager;
+import solution.coronagame.Scenes.GameScene;
 import solution.engine.Util.Timer;
-import solution.engine.logic.Scene;
 
-
-public class CoronaGame extends GameImplementation {
+public class CoronaGame extends SceneManager {
 
     Timer timer;
 
-
-
-    @Override
-    public void update(float deltaTime) {
-    }
+    GameScene game = new GameScene();
 
     @Override
     public void init() {
+        // setScene(game);
+    }
+
+    @Override
+    protected void switchScene(String sceneName) {
     }
 
 }

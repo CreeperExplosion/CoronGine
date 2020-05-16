@@ -1,6 +1,6 @@
 package solution.engine;
 
-import solution.engine.logic.GameImplementation;
+import solution.engine.logic.SceneManager;
 import solution.engine.input.Input;
 import solution.engine.graphics.Camera;
 import solution.engine.graphics.Renderer;
@@ -40,7 +40,7 @@ public class Engine implements Runnable {
     // Game stuff
     private Input input;
     private Window gameWindow;
-    private GameImplementation gameImplementation;
+    private SceneManager sceneManager;
     //////////////////
 
     //
@@ -56,7 +56,7 @@ public class Engine implements Runnable {
     public static final int rendererX = rendererY * 16 / 9;
     public static final int WINDOW_HEIGHT = 720;
     public static final int WINDOW_WIDTH = WINDOW_HEIGHT * 16 / 9;
-    public static float SCALE = (float) WINDOW_HEIGHT/rendererY;
+    public static float SCALE = (float) WINDOW_HEIGHT / rendererY;
     ////////////////
 
     //
@@ -68,7 +68,7 @@ public class Engine implements Runnable {
     // camera
     private Camera camera;
     //////
-    
+
     //
 
     //
@@ -83,8 +83,8 @@ public class Engine implements Runnable {
 
     private Renderer renderer;
 
-    public Engine(GameImplementation gameImplementation) {
-        this.gameImplementation = gameImplementation;
+    public Engine(SceneManager sceneManager) {
+        this.sceneManager = sceneManager;
         running = false;
         gameThread = new Thread(this, GAME_NAME);
 
@@ -98,7 +98,7 @@ public class Engine implements Runnable {
 
     public void init() {
         gameWindow.init();
-        gameImplementation.init();
+        sceneManager.init();
     };
 
     public void start() {
@@ -118,9 +118,9 @@ public class Engine implements Runnable {
         long initialTime = System.nanoTime();
         final double timePerTick = 1000000000 / TPS;
         final double timePerFrame = 1000000000 / FPS;
-        final double timePerLightUpate = 1000000000/LUPS;
+        final double timePerLightUpate = 1000000000 / LUPS;
         double deltaU = 0, deltaF = 0, deltaL = 0;
-        int frames = 0, ticks = 0, lightUpdates = 0 ;
+        int frames = 0, ticks = 0, lightUpdates = 0;
         long timer = System.currentTimeMillis();
 
         while (running) {
@@ -143,7 +143,7 @@ public class Engine implements Runnable {
                 frames++;
                 deltaF--;
             }
-            if(deltaL >=1){
+            if (deltaL >= 1) {
                 updateLight();
                 lightUpdates++;
                 deltaL--;
@@ -164,12 +164,11 @@ public class Engine implements Runnable {
 
     public void input() {
         input.update(camera);
-       //gameWindow.AppendTitle(Input.mouseX() + "  :  " + Input.mouseY());
+        // gameWindow.AppendTitle(Input.mouseX() + " : " + Input.mouseY());
     }
 
     public void update(float deltaTime) {
-        gameImplementation.update(deltaTime);
-
+        sceneManager.update(deltaTime);
         gameWindow.AppendTitle(renderTime);
     }
 
@@ -179,11 +178,7 @@ public class Engine implements Runnable {
         graphics.setColor(Color.WHITE);
         graphics.clearRect(0, 0, gameWindow.getWidth(), gameWindow.getHeight());
 
-        
-
-
-
-        camera = gameImplementation.getCurrentScene().camera;
+        camera = sceneManager.getCurrentScene().camera;
         renderer.setCamera(camera);
         renderer.render(graphics, gameWindow);
 
@@ -191,7 +186,7 @@ public class Engine implements Runnable {
         graphics.dispose();
     }
 
-    public void updateLight(){
+    public void updateLight() {
         renderer.renderLight();
     }
 
