@@ -1,10 +1,18 @@
 package solution.engine.logic;
 
+import java.util.HashMap;
+
+import solution.engine.gameobject.GameObject;
+
 public abstract class SceneManager {
 
     protected Scene currentScene = new EmptyScene();
 
     public abstract void init();
+
+    HashMap<String, Scene> scenes = new HashMap<>();
+
+    HashMap<String, GameObject> ascendedObjects = new HashMap<>();
 
     public void update(float deltaTime) {
         currentScene.update(deltaTime);
@@ -15,8 +23,13 @@ public abstract class SceneManager {
         currentScene = scene;
     }
 
-    // TODO find a faster parameter than String
-    protected abstract void switchScene(String changeTo);
+    protected void addScene(String name, Scene scene) {
+        scenes.put(name, scene);
+    }
+
+    void switchScene(String name) {
+        currentScene = scenes.get(name);
+    }
 
     /**
      * @return the currentScene

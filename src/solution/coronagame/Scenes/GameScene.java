@@ -6,17 +6,16 @@ public class GameScene extends Scene {
 
     @Override
     public void init() {
-
     }
 
     @Override
     public void update(float deltaTime) {
+        
 
     }
 
     @Override
     public void onSelected() {
-
     }
 
 }

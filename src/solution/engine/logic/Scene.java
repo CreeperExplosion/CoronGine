@@ -25,13 +25,25 @@ public abstract class Scene {
             return;
         }
 
-        initialized = true;
         init();
+        initialized = true;
         onSelected();
     }
 
-    protected void requestSceneChange(String changeTo){
+    protected void changeScene(String changeTo) {
         manager.switchScene(changeTo);
+    }
+
+    protected void ascendObject(String name, GameObject object){
+        manager.ascendedObjects.put(name, object);
+    }
+
+    protected GameObject descendScene(String name) {
+        return manager.ascendedObjects.get(name);
+    }
+
+    protected void removeAscendedObject(String name) {
+        manager.ascendedObjects.remove(name);
     }
 
     public abstract void init();
@@ -42,9 +54,6 @@ public abstract class Scene {
 
     public void addGameObject(GameObject obj) {
         gameObjects.add(obj);
-
-        if (!running)
-            return;
     }
 
 }
