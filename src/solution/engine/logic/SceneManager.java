@@ -8,15 +8,15 @@ public abstract class SceneManager {
 
     protected Scene currentScene = new EmptyScene();
 
-    public abstract void init();
-
     HashMap<String, Scene> scenes = new HashMap<>();
 
-    HashMap<String, GameObject> ascendedObjects = new HashMap<>();
+    protected HashMap<String, GameObject> ascendedObjects = new HashMap<>();
 
     public void update(float deltaTime) {
         currentScene.update(deltaTime);
     }
+
+    public abstract void init();
 
     protected void setScene(Scene scene) {
         scene.start(this);
@@ -31,9 +31,6 @@ public abstract class SceneManager {
         currentScene = scenes.get(name);
     }
 
-    /**
-     * @return the currentScene
-     */
     public Scene getCurrentScene() {
         return currentScene;
     }
@@ -45,7 +42,7 @@ public abstract class SceneManager {
 
         @Override
         public void update(float deltaTime) {
-            System.out.println("Please Add Scene");
+            System.out.println("Please Select a scene");
         }
 
         @Override

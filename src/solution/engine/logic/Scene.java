@@ -38,7 +38,7 @@ public abstract class Scene {
         manager.ascendedObjects.put(name, object);
     }
 
-    protected GameObject descendScene(String name) {
+    protected GameObject descendObject(String name) {
         return manager.ascendedObjects.get(name);
     }
 
