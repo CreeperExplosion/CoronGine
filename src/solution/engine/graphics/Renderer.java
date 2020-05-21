@@ -101,8 +101,6 @@ public class Renderer {
 
         screen2D.scale(xScale, yScale);
         worldLight.render(screen2D);
-
-        cleanup();
     }
 
     public void renderLight(){
@@ -214,7 +212,7 @@ public class Renderer {
     /**
      * revert everything for each frame;
      */
-    private void cleanup() {
+    public void cleanup() {
         zLayers = new ArrayList<HashSet<RenderObject>>(Z_LAYERS_NUMBER);
 
         for (int i = 0; i < Z_LAYERS_NUMBER; i++) {

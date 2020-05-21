@@ -18,7 +18,8 @@ public abstract class SceneManager {
 
     public abstract void init();
 
-    protected void setScene(Scene scene) {
+    protected void setScene(String name) {
+        var scene = scenes.get(name);
         scene.start(this);
         currentScene = scene;
     }

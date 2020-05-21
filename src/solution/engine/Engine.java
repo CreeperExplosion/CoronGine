@@ -90,10 +90,7 @@ public class Engine implements Runnable {
 
         gameWindow = new Window(WINDOW_WIDTH, WINDOW_HEIGHT, GAME_NAME);
 
-        renderer = new Renderer(rendererX, rendererY, gameWindow);
-
         input = new Input(gameWindow);
-
     }
 
     public void init() {
@@ -168,17 +165,23 @@ public class Engine implements Runnable {
     }
 
     public void update(float deltaTime) {
+        this.renderer = sceneManager.getCurrentScene().getRenderer();
+        renderer.cleanup();
+
         sceneManager.update(deltaTime);
         gameWindow.AppendTitle(renderTime);
     }
 
     public void render() {
+        this.camera = sceneManager.getCurrentScene().camera;
+
         BufferStrategy renderBuffer = gameWindow.getBufferStrategy();
         Graphics2D graphics = (Graphics2D) renderBuffer.getDrawGraphics();
+
+        // Clearing the screen
         graphics.setColor(Color.WHITE);
         graphics.clearRect(0, 0, gameWindow.getWidth(), gameWindow.getHeight());
 
-        camera = sceneManager.getCurrentScene().camera;
         renderer.setCamera(camera);
         renderer.render(graphics, gameWindow);
 

@@ -4,18 +4,25 @@ import java.util.ArrayList;
 
 import solution.engine.gameobject.GameObject;
 import solution.engine.graphics.Camera;
+import solution.engine.graphics.Renderer;
 
 public abstract class Scene {
 
     public Camera camera = new Camera();
 
-    protected ArrayList<GameObject> gameObjects = new ArrayList<>();
+    public ArrayList<GameObject> gameObjects = new ArrayList<>();
+
+    protected Renderer renderer;
 
     protected boolean running = false;
 
     protected boolean initialized = false;
 
     private SceneManager manager;
+
+    public abstract void init();
+
+    public abstract void onSelected();
 
     void start(SceneManager manager) {
         this.manager = manager;
@@ -34,7 +41,7 @@ public abstract class Scene {
         manager.switchScene(changeTo);
     }
 
-    protected void ascendObject(String name, GameObject object){
+    protected void ascendObject(String name, GameObject object) {
         manager.ascendedObjects.put(name, object);
     }
 
@@ -46,14 +53,20 @@ public abstract class Scene {
         manager.ascendedObjects.remove(name);
     }
 
-    public abstract void init();
+    public void update(final float deltaTime) {
+        for (var obj : gameObjects) {
+            obj.update(deltaTime, this);
+        }
+    }
 
-    public abstract void update(float deltaTime);
+    public void addGameObjects(GameObject... objs) {
+        for (var obj : objs) {
+            gameObjects.add(obj);
+        }
+    }
 
-    public abstract void onSelected();
-
-    public void addGameObject(GameObject obj) {
-        gameObjects.add(obj);
+    public Renderer getRenderer() {
+        return renderer;
     }
 
 }

@@ -3,40 +3,51 @@ package solution.engine.gameobject;
 import java.util.LinkedList;
 import java.util.List;
 
-public class GameObject {
-    
-    List<Component> components;
+import solution.engine.logic.Scene;
+
+public final class GameObject {
+
+    public List<Component> components;
+
+    public Scene scene;
 
     public GameObject() {
         components = new LinkedList<>();
     }
 
-    public void addComponent(Component component){
-        component.gameObject = this;
-        components.add(component);
+    public GameObject(final Component... components) {
+        addComponents(components);
     }
 
-    public<T extends Component> T getComponent(Class<T> componentClass){
-        for (Component component : components) {
-            if(componentClass.isAssignableFrom(component.getClass())){
+    public void addComponents(final Component... components) {
+        for (final var comp : components) {
+
+            this.components.add(comp);
+            comp.gameObject = this;
+            comp.start();
+        }
+    }
+
+    public <T extends Component> T getComponent(final Class<T> componentClass) {
+        for (final var component : components) {
+            if (componentClass.isAssignableFrom(component.getClass())) {
                 return componentClass.cast(component);
             }
         }
         return null;
-    } 
+    }
 
-    public <T extends Component> void removeComponent(Class<T> componentClass){
-        
-        for (Component component : components) {
-            if(componentClass.isAssignableFrom(component.getClass())){
+    public <T extends Component> void removeComponent(final Class<T> componentClass) {
+        for (final var component : components) {
+            if (componentClass.isAssignableFrom(component.getClass())) {
                 components.remove(component);
-                return;
             }
         }
     }
 
-    public void update(float deltaTime){
-        for (Component component : components) {
+    public void update(final float deltaTime, Scene scene) {
+        this.scene = scene;
+        for (final var component : components) {
             component.update(deltaTime);
         }
     }
