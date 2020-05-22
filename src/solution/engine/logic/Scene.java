@@ -9,16 +9,12 @@ import solution.engine.graphics.Renderer;
 public abstract class Scene {
 
     public Camera camera = new Camera();
-
     public ArrayList<GameObject> gameObjects = new ArrayList<>();
-
-    protected Renderer renderer;
-
+    public Renderer renderer;
     protected boolean running = false;
-
     protected boolean initialized = false;
-
     private SceneManager manager;
+    public float brightness;
 
     public abstract void init();
 
@@ -57,16 +53,14 @@ public abstract class Scene {
         for (var obj : gameObjects) {
             obj.update(deltaTime, this);
         }
+
+        renderer.setWorldBrightness(brightness);
     }
 
     public void addGameObjects(GameObject... objs) {
         for (var obj : objs) {
             gameObjects.add(obj);
         }
-    }
-
-    public Renderer getRenderer() {
-        return renderer;
     }
 
 }

@@ -19,9 +19,12 @@ public abstract class SceneManager {
     public abstract void init();
 
     protected void setScene(String name) {
+        currentScene.running = false;
+        // // // // // // // // // //
         var scene = scenes.get(name);
         scene.start(this);
         currentScene = scene;
+        currentScene.running = true;
     }
 
     protected void addScene(String name, Scene scene) {

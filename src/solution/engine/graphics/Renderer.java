@@ -8,7 +8,6 @@ import java.awt.geom.AffineTransform;
 
 public class Renderer {
 
-
     public static final int Z_LAYERS_NUMBER = 3;
     float yScale;
     float xScale;
@@ -19,6 +18,8 @@ public class Renderer {
     WorldLighting worldLight;
 
     ArrayList<LightSource> lightSources;
+
+    private float worldBrightness = 0f;
 
     public Renderer(int rendererSizeX, int rendererSizeY, Window window) {
 
@@ -43,11 +44,11 @@ public class Renderer {
      * 
      * render steps:
      * <ol>
-     * <li> set image Quality
-     * <li> scale from render space to screen space
-     * <li> tanslate and scale according to camera
-     * <li> render every object that is not culled
-     * <li> render every light that is not culled
+     * <li>set image Quality
+     * <li>scale from render space to screen space
+     * <li>tanslate and scale according to camera
+     * <li>render every object that is not culled
+     * <li>render every light that is not culled
      * </ol>
      * <br>
      * 
@@ -81,7 +82,7 @@ public class Renderer {
         // camera transformation
         //
         screen2D.scale(camera.getZoom(), camera.getZoom());
-        screen2D.translate( -camera.getX(), -camera.getY());
+        screen2D.translate(-camera.getX(), -camera.getY());
         //
         // drawing each objects
         //
@@ -94,37 +95,32 @@ public class Renderer {
                 screen2D.scale(renderObject.scalex, renderObject.scaley);
                 screen2D.drawImage(renderObject.image, 0, 0, null);
                 screen2D.setTransform(at);
-                
+
             }
         }
         screen2D.setTransform(oldAT);
-
+        // render the lights
         screen2D.scale(xScale, yScale);
         worldLight.render(screen2D);
     }
 
-    public void renderLight(){
-         // render light here
-         worldLight.reset();
-         LightSource l  = new LightSource(1);
-         l.y = 20;
-         l.x = 10;
-         l.scale= 20;
- 
-         LightSource l2 = new LightSource(1);
-         l2.x = 0;
-         l2.y = 0;
-         l2.scale = 3;
-         lightSources.add(l2);
-         lightSources.add(l);
+    public void renderLight() {
+        // render light here
 
-         worldLight.setLightlevel(240);
-         worldLight.renderLight(camera, lightSources);
+        // 0 - very bright , 255- pitch black
+
+        worldBrightness = (worldBrightness < 0f) ? 0f : worldBrightness;
+        worldBrightness = (worldBrightness > 1f) ? 1f : worldBrightness;
+
+        float worldDarkness = 1 - worldBrightness;
+
+        worldLight.setLightlevel((int) (worldDarkness * 255f));
+        worldLight.renderLight(camera, lightSources);
     }
-
 
     /**
      * create a rectangular image and add that to renderobjet to render later
+     * 
      * @param x      x position of top left corner
      * @param y      y position of top left corner
      * @param width
@@ -148,6 +144,7 @@ public class Renderer {
 
     /**
      * add image to renderobjects to render later
+     * 
      * @param image
      * @param posX  top left corner
      * @param posY  top left corner
@@ -155,7 +152,7 @@ public class Renderer {
      * @param scale
      */
     public void drawImage(BufferedImage image, float posX, float posY, int z, float scale) {
-        if (shouldCull(posX, posY, scale * 16f)){
+        if (shouldCull(posX, posY, scale * 16f)) {
             return;
         }
 
@@ -224,6 +221,10 @@ public class Renderer {
 
     public void setCamera(Camera camera) {
         this.camera = camera;
+    }
+
+    public void setWorldBrightness(float worldBrightness) {
+        this.worldBrightness = worldBrightness;
     }
 
     class RenderObject {
