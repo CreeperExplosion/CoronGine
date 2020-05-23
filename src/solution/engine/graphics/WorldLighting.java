@@ -5,15 +5,9 @@ import java.util.ArrayList;
 import java.awt.*;
 import java.awt.geom.*;
 
-
-
-
-
-
 public class WorldLighting {
 
-    private int light;
-
+    float lightlevel = 0f;
 
     BufferedImage worldLight;
     int width, height;
@@ -25,44 +19,48 @@ public class WorldLighting {
         worldLight = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
     }
 
+    void renderLight(Camera cam, ArrayList<LightSource> lightSources) {
+        var lightGraphics = (Graphics2D) worldLight.getGraphics();
+        var bf = lightGraphics.getTransform();
 
-    void renderLight(Camera cam, ArrayList<LightSource> lightSources){
-        Graphics2D lightGraphics =  (Graphics2D) worldLight.getGraphics();
-
-
-        //set light quality
+        //
+        // set light quality
         lightGraphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         lightGraphics.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
         lightGraphics.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION,
                 RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
 
+        //
+        // setting the world's light colo
 
-        AffineTransform bf = lightGraphics.getTransform();
-        lightGraphics.setColor(new Color(light << 24, true));
+        var lColor = new Color(0, 0, 0, 1 - lightlevel);
+
+        lightGraphics.setColor(lColor);
         lightGraphics.fillRect(0, 0, width, height);
 
-
-        lightGraphics.translate(((float)width) /2, ((float)height)/2 );;
+        //
+        // setting camera transform
+        lightGraphics.translate(((float) width) / 2, ((float) height) / 2);
         lightGraphics.scale(cam.getZoom(), cam.getZoom());
-        lightGraphics.translate(-cam.getX(),-cam.getY());
+        lightGraphics.translate(-cam.getX(), -cam.getY());
 
-       
+        //
+        // setting how the light should be drawn
+        var comp = AlphaComposite.getInstance(AlphaComposite.DST_IN);
+        lightGraphics.setComposite(comp);
 
-
+        //
+        // drawing each light with their transform
         for (LightSource lightSource : lightSources) {
             AffineTransform af = lightGraphics.getTransform();
 
             lightGraphics.scale(lightSource.scale, lightSource.scale);
             lightGraphics.translate(lightSource.x, lightSource.y);
-            AlphaComposite comp = AlphaComposite.getInstance(AlphaComposite.DST_IN, lightSource.brightness);
-            lightGraphics.setComposite(comp);
             lightSource.render(lightGraphics);
-            //lightGraphics.drawImage(lightSource.getLightImage(), 0, 0, null);
 
             lightGraphics.setTransform(af);
         }
 
-        
         lightGraphics.setTransform(bf);
         lightGraphics.dispose();
     }
@@ -74,21 +72,19 @@ public class WorldLighting {
         return worldLight;
     }
 
-    void reset(){
-        //TODO find a faster way
+    void reset() {
         worldLight = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
     }
 
-    void render(Graphics2D graphics){
+    void render(Graphics2D graphics) {
         graphics.drawImage(worldLight, 0, 0, null);
     }
 
     /**
      * @param lightlevel the lightlevel to set
      */
-    public void setLightlevel(int lightlevel) {
-        light = lightlevel;
+    public void setLightlevel(float lightlevel) {
+        this.lightlevel = lightlevel;
     }
 
-
-}   
+}

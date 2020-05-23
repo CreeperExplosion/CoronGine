@@ -16,15 +16,16 @@ public class Engine implements Runnable {
 
     //
     public final static String GAME_NAME = "CORONA GAME";
+    static private String appendedTitle = " ";
     //
 
     //
 
     // Game loops //
-    private Thread gameThread;
+    private final Thread gameThread;
     private boolean running;
     public final static int FPS = 5000;
-    public final static int LUPS = 60;
+    public final static int LUPS = 120;
     public final static int TPS = 60;
     private static String renderTime;
     ///////////////
@@ -38,9 +39,9 @@ public class Engine implements Runnable {
     //
 
     // Game stuff
-    private Input input;
-    private Window gameWindow;
-    private SceneManager sceneManager;
+    private final Input input;
+    private final Window gameWindow;
+    private final SceneManager sceneManager;
     //////////////////
 
     //
@@ -57,6 +58,7 @@ public class Engine implements Runnable {
     public static final int WINDOW_HEIGHT = 720;
     public static final int WINDOW_WIDTH = WINDOW_HEIGHT * 16 / 9;
     public static float SCALE = (float) WINDOW_HEIGHT / rendererY;
+    private Renderer renderer;
     ////////////////
 
     //
@@ -81,9 +83,7 @@ public class Engine implements Runnable {
 
     //
 
-    private Renderer renderer;
-
-    public Engine(SceneManager sceneManager) {
+    public Engine(final SceneManager sceneManager) {
         this.sceneManager = sceneManager;
         running = false;
         gameThread = new Thread(this, GAME_NAME);
@@ -104,7 +104,7 @@ public class Engine implements Runnable {
         gameWindow.show();
         try {
             gameThread.start();
-        } catch (Exception e) {
+        } catch (final Exception e) {
             e.printStackTrace();
         }
     }
@@ -122,7 +122,7 @@ public class Engine implements Runnable {
 
         while (running) {
 
-            long currentTime = System.nanoTime();
+            final long currentTime = System.nanoTime();
             deltaU += (currentTime - initialTime) / timePerTick;
             deltaF += (currentTime - initialTime) / timePerFrame;
             deltaL += (currentTime - initialTime) / timePerLightUpate;
@@ -160,28 +160,33 @@ public class Engine implements Runnable {
     }
 
     public void input() {
+        this.camera = sceneManager.getCurrentScene().camera;
         input.update(camera);
-        // gameWindow.AppendTitle(Input.mouseX() + " : " + Input.mouseY());
     }
 
-    public void update(float deltaTime) {
-        this.renderer = sceneManager.getCurrentScene().getRenderer();
+    public void update(final float deltaTime) {
+
+        if (sceneManager.getCurrentScene().renderer == null)
+            sceneManager.getCurrentScene().renderer = new Renderer(rendererX, rendererY, gameWindow);
+        renderer = sceneManager.getCurrentScene().renderer;
         renderer.cleanup();
 
+        appendedTitle = renderTime;
+
         sceneManager.update(deltaTime);
-        gameWindow.AppendTitle(renderTime);
+        gameWindow.AppendTitle(appendedTitle);
+
     }
 
     public void render() {
-        this.camera = sceneManager.getCurrentScene().camera;
 
-        BufferStrategy renderBuffer = gameWindow.getBufferStrategy();
-        Graphics2D graphics = (Graphics2D) renderBuffer.getDrawGraphics();
+        if (renderer == null)
+            return;
 
-        // Clearing the screen
+        final BufferStrategy renderBuffer = gameWindow.getBufferStrategy();
+        final Graphics2D graphics = (Graphics2D) renderBuffer.getDrawGraphics();
         graphics.setColor(Color.WHITE);
         graphics.clearRect(0, 0, gameWindow.getWidth(), gameWindow.getHeight());
-
         renderer.setCamera(camera);
         renderer.render(graphics, gameWindow);
 
@@ -190,11 +195,18 @@ public class Engine implements Runnable {
     }
 
     public void updateLight() {
+        if (renderer == null)
+            return;
+
         renderer.renderLight();
     }
 
     public static String RENDER_TIME() {
         return renderTime;
+    }
+
+    public static void appendTitle(final String appendedTitle) {
+        Engine.appendedTitle = appendedTitle;
     }
 
 }
