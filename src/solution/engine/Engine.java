@@ -171,8 +171,6 @@ public class Engine implements Runnable {
         renderer = sceneManager.getCurrentScene().renderer;
         renderer.cleanup();
 
-        appendedTitle = renderTime;
-
         sceneManager.update(deltaTime);
         gameWindow.AppendTitle(appendedTitle);
 
@@ -201,7 +199,7 @@ public class Engine implements Runnable {
         renderer.renderLight();
     }
 
-    public static String RENDER_TIME() {
+    public static String renderTime() {
         return renderTime;
     }
 

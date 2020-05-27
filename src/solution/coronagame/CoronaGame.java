@@ -8,9 +8,10 @@ public class CoronaGame extends SceneManager {
     GameScene game = new GameScene();
 
     @Override
-    public void init(){
+    public void init() {
+        addScene("game", game);
 
-        
+        setScene("game");
     }
 
 }

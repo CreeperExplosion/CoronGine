@@ -3,9 +3,18 @@ package solution.engine.gameobject;
 import java.util.LinkedList;
 import java.util.List;
 
+import solution.engine.Math.Vector2f;
 import solution.engine.logic.Scene;
 
 public final class GameObject {
+
+
+    public Vector2f position = new Vector2f(0f, 0f);
+
+    public float scale = 1;
+
+    // TODO change
+    public int z = 0;
 
     public List<Component> components;
 

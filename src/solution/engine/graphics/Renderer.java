@@ -4,6 +4,9 @@ import java.awt.*;
 import java.awt.image.*;
 import java.util.ArrayList;
 import java.util.HashSet;
+
+import solution.engine.gameobject.GameObject;
+
 import java.awt.geom.AffineTransform;
 
 public class Renderer {
@@ -19,7 +22,7 @@ public class Renderer {
 
     ArrayList<LightSource> lightSources;
 
-    private float worldBrightness = 0f;
+    private float worldLightLevel = 0f;
 
     public Renderer(int rendererSizeX, int rendererSizeY, Window window) {
 
@@ -32,11 +35,13 @@ public class Renderer {
         zLayers = new ArrayList<HashSet<RenderObject>>(3);
         for (int i = 0; i < Z_LAYERS_NUMBER; i++) {
             zLayers.add(new HashSet<RenderObject>());
-        }
+        }  
+
+       
+
         camera = new Camera(1, 0, 0);
         lightSources = new ArrayList<LightSource>();
         worldLight = new WorldLighting(rendererSizeX, rendererSizeY);
-
     }
 
     /**
@@ -83,6 +88,7 @@ public class Renderer {
         //
         screen2D.scale(camera.getZoom(), camera.getZoom());
         screen2D.translate(-camera.getX(), -camera.getY());
+
         //
         // drawing each objects
         //
@@ -105,16 +111,9 @@ public class Renderer {
     }
 
     public void renderLight() {
-        // render light here
+        worldLight.reset();
 
-        // 0 - very bright , 255- pitch black
-
-        worldBrightness = (worldBrightness < 0f) ? 0f : worldBrightness;
-        worldBrightness = (worldBrightness > 1f) ? 1f : worldBrightness;
-
-        float worldDarkness = 1 - worldBrightness;
-
-        worldLight.setLightlevel((int) (worldDarkness * 255f));
+        worldLight.setLightlevel(worldLightLevel);
         worldLight.renderLight(camera, lightSources);
     }
 
@@ -223,11 +222,11 @@ public class Renderer {
         this.camera = camera;
     }
 
-    public void setWorldBrightness(float worldBrightness) {
-        this.worldBrightness = worldBrightness;
+    public void setWorldLightLevel(float worldLightLevel) {
+        this.worldLightLevel = worldLightLevel;
     }
 
-    class RenderObject {
+    private class RenderObject {
         float posX;
         float posY;
         float scalex;

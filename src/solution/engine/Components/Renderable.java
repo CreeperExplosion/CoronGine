@@ -42,6 +42,8 @@ public class Renderable extends Component {
 
 		gameObject.scene.renderer.drawImage(image, gameObject.position.x, gameObject.position.y, gameObject.z,
 				gameObject.scale);
+
+		gameObject.scene.brightness =  (float) Math.random();
 	}
 
 }

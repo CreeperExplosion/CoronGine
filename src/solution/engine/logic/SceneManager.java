@@ -25,10 +25,15 @@ public abstract class SceneManager {
         scene.start(this);
         currentScene = scene;
         currentScene.running = true;
+
+
+
+
     }
 
     protected void addScene(String name, Scene scene) {
         scenes.put(name, scene);
+    
     }
 
     void switchScene(String name) {
