@@ -114,6 +114,7 @@ public class Renderer {
         worldLight.reset();
 
         worldLight.setLightlevel(worldLightLevel);
+        worldLight.setLightlevel(worldLightLevel);
         worldLight.renderLight(camera, lightSources);
     }
 
@@ -223,6 +224,7 @@ public class Renderer {
     }
 
     public void setWorldLightLevel(float worldLightLevel) {
+
         this.worldLightLevel = worldLightLevel;
     }
 

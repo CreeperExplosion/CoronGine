@@ -74,8 +74,7 @@ public class WorldLighting {
 
     void reset() {
         // TODO to slow for comfort
-        // this creates a new object, leaving the garbage collector to erase the old
-        // one.
+        // this creates a new object, leaving the garbage collector to erase the old one.
         // which is SLOW
         worldLight = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
     }

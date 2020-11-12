@@ -10,17 +10,20 @@ public class LightSource {
     float brightness;
     float x,y;
     float scale;
-    public LightSource(float brightness) {
+    public LightSource(String pathToImage, float brightness) {
 
         this.brightness = brightness;
         try {
-            lightImage = ImageLoader.loadImage("/TestLight.png");
+            lightImage = ImageLoader.loadImage(pathToImage);
         } catch (IOException e){
             e.printStackTrace();
         }
         
-
         scale = 1 ;
+    }
+
+    public void setScale(float scale){
+        this.scale = scale;
     }
 
     /**
