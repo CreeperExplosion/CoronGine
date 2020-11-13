@@ -41,8 +41,8 @@ public class WorldLighting {
         //
         // setting camera transform
         lightGraphics.translate(((float) width) / 2, ((float) height) / 2); 
-        lightGraphics.scale(cam.getZoom(), cam.getZoom());
         lightGraphics.translate(-cam.getX(), -cam.getY());
+        lightGraphics.scale(cam.getZoom(), cam.getZoom());
 
         //
         // setting how the light should be drawn
@@ -54,8 +54,9 @@ public class WorldLighting {
         for (LightSource lightSource : lightSources) {
             AffineTransform af = lightGraphics.getTransform();
 
-            lightGraphics.scale(lightSource.scale, lightSource.scale);
             lightGraphics.translate(lightSource.x, lightSource.y);
+            lightGraphics.scale(lightSource.scale, lightSource.scale);
+            lightGraphics.rotate(lightSource.rot);
             lightSource.render(lightGraphics);
 
             lightGraphics.setTransform(af);

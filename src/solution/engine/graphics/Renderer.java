@@ -5,8 +5,6 @@ import java.awt.image.*;
 import java.util.ArrayList;
 import java.util.HashSet;
 
-import solution.engine.gameobject.GameObject;
-
 import java.awt.geom.AffineTransform;
 
 public class Renderer {
@@ -99,6 +97,7 @@ public class Renderer {
                 AffineTransform at = screen2D.getTransform();
                 screen2D.translate(renderObject.posX, renderObject.posY);
                 screen2D.scale(renderObject.scalex, renderObject.scaley);
+                // screen2D.rotate(0.785d);
                 screen2D.drawImage(renderObject.image, 0, 0, null);
                 screen2D.setTransform(at);
 
@@ -180,6 +179,8 @@ public class Renderer {
         if (shouldCull(posX, posY, lightSource.scale * 16))
             return;
 
+        lightSource.x = posX ;//- (8 * lightSource.scale);
+        lightSource.y = posY ;//- (8 * lightSource.scale);
         lightSources.add(lightSource);
     }
 

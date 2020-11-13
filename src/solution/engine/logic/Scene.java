@@ -20,7 +20,7 @@ public abstract class Scene {
 
     private SceneManager manager;
 
-    public float brightness = 1f;
+    public float brightness;
 
     public abstract void init();
 
@@ -59,12 +59,19 @@ public abstract class Scene {
         for (var obj : gameObjects) {
             obj.update(deltaTime, this);
         }
+
         renderer.setWorldLightLevel(brightness);
     }
 
     public void addGameObjects(GameObject... objs) {
         for (var obj : objs) {
             gameObjects.add(obj);
+        }
+    }
+
+    public void removeGameObjects(GameObject... objs){
+        for (var obj : objs) {
+            gameObjects.remove(obj);
         }
     }
 

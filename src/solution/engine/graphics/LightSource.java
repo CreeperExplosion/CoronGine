@@ -7,12 +7,12 @@ import java.awt.*;
 public class LightSource {
 
     BufferedImage lightImage;
-    float brightness;
+    float brightness = 1f;
     float x,y;
-    float scale;
-    public LightSource(String pathToImage, float brightness) {
+    public float rot;
+    public float scale;
+    public LightSource(String pathToImage) {
 
-        this.brightness = brightness;
         try {
             lightImage = ImageLoader.loadImage(pathToImage);
         } catch (IOException e){
@@ -24,6 +24,10 @@ public class LightSource {
 
     public void setScale(float scale){
         this.scale = scale;
+    }
+
+    public void setBrightness(float brightness){
+        this.brightness = brightness;
     }
 
     /**

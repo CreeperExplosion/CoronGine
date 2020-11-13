@@ -26,7 +26,7 @@ public class Renderable extends Component {
 		try {
 			image = ImageLoader.loadImage(pathToImage);
 		} catch (IOException e) {
-			System.err.println("file or directory [" + pathToImage + "] does not exist");
+			System.err.println(e.toString());
 		}
 	}
 

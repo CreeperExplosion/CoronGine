@@ -2,27 +2,36 @@ package solution.engine.Components;
 
 import solution.engine.gameobject.Component;
 import solution.engine.graphics.LightSource;
+import solution.engine.input.Input;
 
 public class LightEmmiter extends Component {
 
-    private float scale;
     private LightSource lightSource;
 
-    public LightEmmiter(String pathToImage, float brightness, float scale){
-        lightSource = new LightSource(pathToImage,brightness);
-        lightSource.setScale(scale);
+    public float scale = 1f;
 
-        this.scale = scale;
+    public LightEmmiter(String pathToImage, float brightness){
+        lightSource = new LightSource(pathToImage);
+
+        setBrightness(brightness);
     }
 
     @Override
     public void init() {
-
+        lightSource.setScale(gameObject.scale);
     }
 
     @Override
     public void update(float deltaTime) {
-        gameObject.scene.renderer.drawLight(lightSource, gameObject.position.x, gameObject.position.y);
+
+        lightSource.setScale(gameObject.scale * this.scale);
+
+        gameObject.scene.renderer.drawLight(lightSource, 
+        Input.mouseX() - 8 * lightSource.scale, Input.mouseY()- 8 * lightSource.scale);
+    }
+
+    public void setBrightness(float brightness){
+        lightSource.setBrightness(brightness);
     }
     
 }

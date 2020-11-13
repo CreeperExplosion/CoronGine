@@ -16,7 +16,14 @@ public class Vector2f {
 
 
     public Vector2f() {
+        x = 0f;
+        y = 0f;
+    }
 
+    public Vector2f mul(float scale){
+        this.x *= scale;
+        this.y *= scale;
+        return this;
     }
 
     public float getAbs() {
@@ -29,6 +36,9 @@ public class Vector2f {
 
     public Vector2f toUnit() {
         float abs = getAbs();
+        if (abs == 0 )
+             return new Vector2f();
+        
         return new Vector2f(x / abs, y / abs);
     }
 

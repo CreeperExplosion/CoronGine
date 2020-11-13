@@ -10,7 +10,7 @@ public class ImageLoader {
         BufferedImage img;
         try {
              img = ImageIO.read(ImageLoader.class.getResource(path));
-        } catch (IOException e){
+        } catch (Exception e){
             throw new IOException(path + " could not be found");
         }
 
