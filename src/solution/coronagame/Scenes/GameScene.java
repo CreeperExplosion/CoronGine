@@ -17,7 +17,7 @@ public class GameScene extends Scene {
     public void init() {
         this.brightness = 0.1f;
         
-        player.addComponents(new LightEmmiter("/TestLight.png", 1f),
+        player.addComponents(new LightEmmiter("/TestLightStencil.png", 1f),
          new Controller(),
          new Sprite("/test.png")
          );

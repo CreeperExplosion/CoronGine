@@ -11,7 +11,7 @@ public class LightEmmiter extends Component {
     public float scale = 1f;
 
     public LightEmmiter(String pathToImage, float brightness){
-        lightSource = new LightSource(pathToImage);
+        lightSource = new LightSource(pathToImage, "/TestLightColor.png");
 
         setBrightness(brightness);
     }

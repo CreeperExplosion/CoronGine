@@ -6,15 +6,18 @@ import java.awt.*;
 
 public class LightSource {
 
-    BufferedImage lightImage;
+    BufferedImage lightStencil;
+    BufferedImage lightColor;
+
     float brightness = 1f;
     float x,y;
     public float rot;
     public float scale;
-    public LightSource(String pathToImage) {
+    public LightSource(String pathToStencil, String pathToColor) {
 
         try {
-            lightImage = ImageLoader.loadImage(pathToImage);
+            lightStencil = ImageLoader.loadImage(pathToStencil);
+            lightColor = ImageLoader.loadImage(pathToColor);
         } catch (IOException e){
             e.printStackTrace();
         }
@@ -33,12 +36,16 @@ public class LightSource {
     /**
      * @return the lightImage
      */
-    BufferedImage getLightImage() {
-        return lightImage;
+    BufferedImage getLightStencil() {
+        return lightStencil;
     }
 
 
-    void render(Graphics2D graphics2d){
-        graphics2d.drawImage(lightImage, 0, 0, null);
+    void stencil(Graphics2D graphics2d){
+        graphics2d.drawImage(lightStencil, 0, 0, null);
+    }
+
+    void color(Graphics2D graphics2d){
+        graphics2d.drawImage(lightColor, 0, 0, null);
     }
 }

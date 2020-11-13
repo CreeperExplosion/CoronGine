@@ -57,7 +57,21 @@ public class WorldLighting {
             lightGraphics.translate(lightSource.x, lightSource.y);
             lightGraphics.scale(lightSource.scale, lightSource.scale);
             lightGraphics.rotate(lightSource.rot);
-            lightSource.render(lightGraphics);
+            lightSource.stencil(lightGraphics);
+
+            lightGraphics.setTransform(af);
+        }
+
+        comp = AlphaComposite.getInstance(AlphaComposite.DST_OVER);
+        lightGraphics.setComposite(comp);
+
+        for (LightSource lightSource : lightSources) {
+            AffineTransform af = lightGraphics.getTransform();
+
+            lightGraphics.translate(lightSource.x, lightSource.y);
+            lightGraphics.scale(lightSource.scale, lightSource.scale);
+            lightGraphics.rotate(lightSource.rot);
+            lightSource.color(lightGraphics);
 
             lightGraphics.setTransform(af);
         }
